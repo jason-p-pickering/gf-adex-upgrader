@@ -75,7 +75,8 @@ const webpackConfig = {
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
-            "window.jQuery": "jquery"
+            "window.jQuery": "jquery",
+            DataTable: "datatables.net"
         }),
         !isDevBuild ? undefined : new webpack.DefinePlugin({
             DHIS_CONFIG: JSON.stringify(dhisConfig),
@@ -89,8 +90,11 @@ const webpackConfig = {
         port: devServerPort,
         compress: true,
         proxy: {
-            "/api": dhisConfig.baseUrl,
-        }
+            "/api/*": {
+              "target": "http://localhost:8080/dhis",
+              "auth": "admin:district",
+            }
+          }
     },
     mode: "development"
 };
