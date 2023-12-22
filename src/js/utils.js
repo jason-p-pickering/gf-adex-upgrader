@@ -146,8 +146,8 @@ export async function upgradeExistingIndicators(remoteIndicators, existingIndica
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log("Response from server:", JSON.stringify(data));
-            alert("GFADEX indicators upgraded successfully!");
+            console.log("Response from server:", data);
+            renderUpgradeStatusReport(data);
         })
         .catch((error) => {
             console.error("Error upgrading existing indicators:", error);
@@ -155,11 +155,21 @@ export async function upgradeExistingIndicators(remoteIndicators, existingIndica
         });
 }
 
+function renderUpgradeStatusReport(statusReport) {
+    //Just display the raw JSON as text
+    var html = "<h3>Upgrade Status Report</h3>"
+    
+    html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
+    $("#upgradeStatus").html(html);
+}
+
 export async function upgradeIndicators() {
     const remoteIndicators = await getIndicatorsFromDataStore();
     await importNewIndicators();
     const existingIndicators = await fetchIndicators();
-    await upgradeExistingIndicators(remoteIndicators, existingIndicators);
+    const upgradeStatus =  upgradeExistingIndicators(remoteIndicators, existingIndicators);
+    //Display the server response to the user in the upgradeStatus div
+    
 
 }
 
@@ -218,4 +228,21 @@ export function uploadReferenceJson() {
     };
 
     reader.readAsText(file);
+}
+
+
+export function fetchUserLocale() {
+    return d2Fetch("me/settings/keyUiLocale.json")
+        .then(data => {
+            if (!data || data.length === 0) {
+                console.log("No user locale found");
+                return 'en';
+            } else {
+                return data;
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching user locale:", error);
+            return 'en';
+        });
 }
