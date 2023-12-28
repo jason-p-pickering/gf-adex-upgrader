@@ -190,7 +190,7 @@ export function uploadReferenceJson() {
                     body: JSON.stringify(remoteMetadata),
                 })
                     .then((response) => response.json())
-                    .then((data) => {
+                    .then(() => {
                         document.querySelector("#update-gf-metadata-btn").disabled = false;
                         alert("JSON uploaded and processed successfully!");
                     })
