@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "Gerenciador de Pacotes GF ADEX",
+    "exit": "Sair"
+  },
+  "introduction": {
+    "title": "Introdução",
+    "content": "Este aplicativo ajudará você a atualizar para a versão mais recente do pacote de metadados GF ADEx. Siga as etapas abaixo para fazer a atualização. Todas as metadados relacionadas ao GF ADEX, como indicadores e grupos de indicadores, serão atualizadas. Todas as alterações que você fez nas definições de numeradores serão preservadas."
+  },
+  "step1": {
+    "title": "Etapa 1: Baixe o pacote mais recente",
+    "content": "Clique no botão abaixo para baixar o pacote mais recente. O pacote será baixado para o seu computador."
+  },
+  "step2": {
+    "title": "Etapa 2: Envie uma cópia dos metadados GF ADEX para o datastore do DHIS2.",
+    "content": "Usando o arquivo que você baixou na Etapa 1, escolha o arquivo para enviá-lo e clique em \"Enviar modelo GFADEx\". Isso salvará uma cópia dos metadados GF ADEx no datastore local."
+  },
+  "upload-btn": {
+    "choose": "Escolher arquivo",
+    "no-file-chosen": "Nenhum arquivo escolhido",
+    "upload": "Enviar modelo GFADEx"
+  },
+  "step3": {
+    "title": "Etapa 3: Atualize os metadados GFADex",
+    "content": "Após concluir as Etapas 1 e 2, clique no botão \"Atualizar Metadados GF ADEx\" abaixo. Isso atualizará os metadados GF ADEx em sua instância do DHIS2. Este processo não afetará nenhum de seus dados existentes, mas atualizará os metadados. Este processo levará alguns minutos para ser concluído. Uma vez concluído, você verá um resumo do processo de importação abaixo."
+  },
+  "update-metadata-btn": "Atualizar Metadados GF ADEx"
+}

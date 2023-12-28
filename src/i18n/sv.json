@@ -1,0 +1,28 @@
+{
+  "header": {
+    "title": "GF ADEX Package Manager",
+    "exit": "Avsluta"
+  },
+  "introduction": {
+    "title": "Introduktion",
+    "content": "Den här appen hjälper dig att uppdatera till den senaste versionen av GF ADEx-metadatapaketet. Följ stegen nedan för att uppgradera paketet. Alla GF ADEX-relaterade metadata, såsom indikatorer och indikatorgrupper, kommer att uppdateras. Alla ändringar du har gjort i täljaredefinitionerna kommer att bevaras."
+  },
+  "step1": {
+    "title": "Steg 1: Ladda ner det senaste paketet",
+    "content": "Klicka på knappen nedan för att ladda ner det senaste paketet. Paketet kommer att laddas ner till din dator."
+  },
+  "step2": {
+    "title": "Steg 2: Ladda upp en kopia av GF ADEX-metadata till DHIS2-datastore.",
+    "content": "Använd filen som du laddade ner från steg 1, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta kommer att spara en kopia av GF ADEx-metadata i den lokala datastoren."
+  },
+  "upload-btn": {
+    "choose": "Välj fil",
+    "no-file-chosen": "Ingen fil vald",
+    "upload": "Ladda upp GFADEx-mall"
+  },
+  "step3": {
+    "title": "Steg 3: Uppdatera GFADex-metadata",
+    "content": "När du har slutfört steg 1 och 2, klicka på knappen \"Uppdatera GF ADEx-metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Den här processen påverkar inte någon av dina befintliga data men uppdaterar metadata. Processen tar några minuter att slutföra. När processen är klar, kommer du att se en sammanfattning av importprocessen nedan."
+  },
+  "update-metadata-btn": "Uppdatera GF ADEx-metadata"
+}

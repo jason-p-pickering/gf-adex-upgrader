@@ -1,0 +1,27 @@
+{
+  "header": {
+    "title": "GF ADEX Package Manager",
+    "exit" : "Exit"
+  },
+  "introduction": {
+    "title": "Introduction",
+    "content": "This app will help you to update to the latest version of the GF ADEx metadata package. Follow the steps below to upgrade the package. All GF ADEX related metadata such as indicators, indicator groups will be updated. Any changes which you have made to the numerator definitions will be preserved."
+  },
+  "step1": {
+    "title": "Step 1: Download the latest package",
+    "content": "Click on the button below to download the latest package. The package will be downloaded to your computer."
+  },
+  "step2": {
+    "title": "Step 2: Upload a copy of the GF ADEX metadata to the DHIS2 datastore.",
+    "content": "Using the file which you downloaded from Step 1, choose the file to upload it and then click \"Upload GFADEx template\". This will save a copy of the GF ADEx metadata in the local datastore."},
+    "upload-btn": {
+      "choose": "Choose file",
+      "no-file-chosen": "No file chosen",
+      "upload": "Upload GFADEx template"
+    },
+    "step3" : {
+      "title": "Step 3: Update GFADex metadata",
+      "content": "Once you have completed Step 1 and 2, click the \"Update GF ADEx Metadata button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data, but will update the metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
+    },
+    "update-metadata-btn": "Update GF ADEx Metadata"
+}

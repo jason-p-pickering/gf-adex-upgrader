@@ -15,12 +15,32 @@
             </div>
         </div>
         </a>
-        <p class="headerBarTitle">GF ADEx Indicator Updater</p>
-        <button class="headerBarExit" onclick="location.href='../../..';">Exit</button>
+        <p class="headerBarTitle" data-i18n="header.title">GF ADEx Metadata Manager</p>
+        <button class="headerBarExit" onclick="location.href='../../..';" data-i18n="header.exit">Exit</button>
     </div>
 
     <div class="mainView">
     <div id="appContent">
+        <h2 class="introduction" data-i18n="introduction.title"></h2>
+        <p class="introduction" data-i18n="introduction.content"></p>
+        <h2 class="step1" data-i18n="step1.title"></h2>
+        <p class="step1" data-i18n="step1.content"></p>
+        <!-- File upload-->
+        <h2 class="step2" data-i18n="step2.title"></h2>
+        <p class="step2" data-i18n="step2.content"></p>
+        <div class="upload-btn-wrapper">
+            <button class="btnr" data-i18n="upload-btn.choose">Choose file</button>
+            <span data-i18n="upload-btn.no-file-chosen">No file chosen</span>
+            <input type="file" id="jsonFileInput" accept=".json" />
+        </div>
+        <div class="upload-btn-wrapper">
+            <button class="btnr" data-i18n="upload-btn.upload" onclick="uploadReferenceJson()" id="upload-btn" disabled="true">Upload to datastore</button>
+        </div>
+
+        <h2 class="step3" data-i18n="step3.title"></h2>
+        <p class="step3" data-i18n="step3.content"></p>
+        <button id="update-gf-metadata-btn" onclick="upgradeIndicators()" data-i18n="update-metadata-btn" disabled="true">Update GF ADEx Metadata</button>
+        <div id="upgradeStatus"></div>
     </div>
     </div>
 </body>

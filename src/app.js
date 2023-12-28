@@ -9,22 +9,43 @@ import {uploadReferenceJson} from "./js/utils.js";
 import {getIndicatorsFromDataStore} from "./js/utils.js";
 import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
-import { emitIntroduction } from "./js/utils.js";
+import Translator from '@andreasremdt/simple-translator';
+
+var translator = new Translator();
 
 var baseUrl = getContextPath() + "/api/";
-var userLocale = "en";
+
 console.log("Baseurl is : ", baseUrl);
 
 window.baseUrl = baseUrl;
 window.uploadReferenceJson = uploadReferenceJson;
 window.getIndicatorsFromDataStore = getIndicatorsFromDataStore;
 window.upgradeIndicators = upgradeIndicators;
-window.userLocale = userLocale;
 window.fetchUserLocale = fetchUserLocale;
-window.emitIntroduction = emitIntroduction;
+
+let input = document.querySelector("#jsonFileInput");
+let uploadButton = document.querySelector("#upload-btn");
+
+input.addEventListener("input", function(e) {
+  if (input.files.length > 0) {
+    uploadButton.disabled = false;
+  } else {
+    uploadButton.disabled = true;
+  }
+})
 
 document.addEventListener("DOMContentLoaded", function () {
-    userLocale = fetchUserLocale();
-    emitIntroduction();
+  fetchUserLocale().then((userLocale) => {
+    const availableLanguages = ['en', 'fr', 'pt', 'sv'];
+    const defaultLanguage = 'en';
+    //If the user locale is not in the tranlsation list, use the default language
+    if (!availableLanguages.includes(userLocale)) {
+      userLocale = defaultLanguage;
+    }
 
+    translator.fetch(userLocale).then(() => {
+      // -> Translations are ready...
+      translator.translatePageTo(userLocale);
+    });
+  });
 });

@@ -4,7 +4,6 @@ const webpack = require("webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
-
 //const dhisConfigPath = process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
 
 var dhisConfig;
@@ -60,7 +59,10 @@ const webpackConfig = {
         ]
     },
     resolve: {
-        alias: {}
+        alias: {},
+        fallback: {
+            fs: false
+        }
     },
     plugins: [
         new HTMLWebpackPlugin({
@@ -69,12 +71,9 @@ const webpackConfig = {
         new CopyWebpackPlugin({
             "patterns": [
                 { from: "./src/css", to: "css" },
-                { from: "./src/img", to: "img" }
+                { from: "./src/img", to: "img" },
+                { from: "./src/i18n", to: "i18n"}
             ]
-        }),
-        new webpack.ProvidePlugin({
-            "i18next": "i18next",
-            "window.i18next": "i18next"
         }),
         !isDevBuild ? undefined : new webpack.DefinePlugin({
             DHIS_CONFIG: JSON.stringify(dhisConfig),
@@ -96,5 +95,6 @@ const webpackConfig = {
     },
     mode: "development"
 };
+
 
 module.exports = webpackConfig;

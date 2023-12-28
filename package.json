@@ -3,7 +3,7 @@
   "description": "GF ADEx Indicator Update Tool",
   "version": "0.1.0",
   "dependencies": {
-    "i18next": "^23.7.11"
+    "@andreasremdt/simple-translator": "^2.0.4"
   },
   "devDependencies": {
     "@dhis2/cli-style": "github:dhis2/cli-style",
@@ -20,6 +20,11 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
+  "browser": {
+  "fs": false,
+  "path": false,
+  "os": false
+},
   "main": "./src/app.js",
   "scripts": {
     "build": "webpack --progress",

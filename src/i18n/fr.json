@@ -1,0 +1,28 @@
+{"header": {
+    "title": "Gestionnaire de métadonnées GF ADEx",
+    "exit" : "Quitter"
+  },
+  "introduction": {
+    "title": "Introduction",
+    "content": "Cette application vous aidera à mettre à jour vers la dernière version du package de métadonnées GF ADEx. Suivez les étapes ci-dessous pour mettre à niveau le package. Toutes les métadonnées liées à GF ADEX, telles que les indicateurs et les groupes d'indicateurs, seront mises à jour. Toutes les modifications que vous avez apportées aux définitions des numérateurs seront préservées."
+  },
+  "step1": {
+    "title": "Étape 1 : Téléchargez le dernier package",
+    "content": "Cliquez sur le bouton ci-dessous pour télécharger le dernier package. Le package sera téléchargé sur votre ordinateur."
+  },
+  "step2": {
+    "title": "Étape 2 : Téléchargez une copie des métadonnées GF ADEX dans le datastore de DHIS2.",
+    "content": "Utilisez le fichier que vous avez téléchargé à l'étape 1, choisissez le fichier à télécharger, puis cliquez sur \"Télécharger le modèle GFADEx\". Cela sauvegardera une copie des métadonnées GF ADEX dans le datastore local."
+  },
+  "upload-btn": {
+    "choose": "Choisir un fichier",
+    "no-file-chosen": "Aucun fichier sélectionné",
+    "upload": "Télécharger le modèle GFADEx"
+  },
+  "step3": {
+    "title": "Étape 3 : Mettez à jour les métadonnées GFADex",
+    "content": "Une fois que vous avez terminé les étapes 1 et 2, cliquez sur le bouton \"Mettre à jour les métadonnées GF ADEx\" ci-dessous. Cela mettra à jour les métadonnées GF ADEx dans votre instance DHIS2. Ce processus n'affectera pas vos données existantes, mais mettra à jour les métadonnées. Ce processus prendra quelques minutes pour se terminer. Une fois le processus terminé, vous verrez un résumé du processus d'importation ci-dessous."
+  },
+  "update-metadata-btn": "Mettre à jour les métadonnées GF ADEx"
+  
+}
