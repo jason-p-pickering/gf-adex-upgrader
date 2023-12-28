@@ -21,7 +21,7 @@
     },
     "step3" : {
       "title": "Step 3: Update GFADex metadata",
-      "content": "Once you have completed Step 1 and 2, click the \"Update GF ADEx Metadata button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data, but will update the metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
+      "content": "Once you have completed Step 1 and 2, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data, but will update the metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
     },
     "update-metadata-btn": "Update GF ADEx Metadata"
 }

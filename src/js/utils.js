@@ -104,9 +104,11 @@ export async function upgradeExistingIndicators(remote, existingIndicators) {
 
 function renderUpgradeStatusReport(statusReport) {
     //Just display the raw JSON as text
-    var html = "<h3>Upgrade Status Report</h3>";
-    html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
+    // var html = "<h3>Upgrade Status Report</h3>";
+    // html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
     // eslint-disable-next-line no-undef
+    console.log(statusReport);
+    var html = generateSummaryTable(statusReport);
     document.querySelector("#upgradeStatus").innerHTML = html;
     document.querySelector("#update-gf-metadata-btn").disabled = false;
 }
@@ -219,4 +221,39 @@ export async function fetchUserLocale() {
             console.error("Error fetching user locale:", error);
             return "en";
         });
+}
+
+export function generateSummaryTable(data) {
+
+    const tableHeaders = ["Object Type", "Created", "Updated", "Deleted", "Ignored", "Total"];
+
+    const tableRows = data.response.typeReports.map((report) => {
+        const klassWithoutPrefix = report.klass.replace(/^.*\./, "");
+        const rowValues = [
+            klassWithoutPrefix,
+            report.stats.created,
+            report.stats.updated,
+            report.stats.deleted,
+            report.stats.ignored,
+            report.stats.total,
+        ];
+        return `<tr>${rowValues.map((value) => `<td>${value}</td>`).join("")}</tr>`;
+    });
+
+    const tableHTML = `
+          <table border="1">
+            <thead>
+              <tr>${tableHeaders.map((header) => `<th>${header}</th>`).join("")}</tr>
+            </thead>
+            <tbody>
+              ${tableRows.join("")}
+            </tbody>
+          </table>
+        `;
+    var html = "<h3>Upgrade Status Report</h3>";
+    html += "<h3>Status:" + data.httpStatus + "</h3>";
+    html += "<h3>Status Code:" + data.httpStatusCode + "</h3>";
+    html += tableHTML;
+
+    return html;
 }

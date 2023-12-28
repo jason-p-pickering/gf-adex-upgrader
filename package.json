@@ -1,6 +1,6 @@
 {
-  "name": "gfadex_indicator_upgrader",
-  "description": "GF ADEx Indicator Update Tool",
+  "name": "gfadex_metadata_manager",
+  "description": "GF ADEx Metadata Manager",
   "version": "0.1.0",
   "dependencies": {
     "@andreasremdt/simple-translator": "^2.0.4"
@@ -45,7 +45,7 @@
       "48": "img/icons/app_logo_48x48.png",
       "96": "img/icons/app_logo_96x96.png"
     },
-    "name": "GFADEX Upgrade Tool",
+    "name": "GF ADEx Metadata Manager",
     "version": "0.1.0",
     "appType": "APP"
   }
