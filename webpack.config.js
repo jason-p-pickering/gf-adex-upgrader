@@ -73,10 +73,8 @@ const webpackConfig = {
             ]
         }),
         new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": "jquery",
-            DataTable: "datatables.net"
+            "i18next": "i18next",
+            "window.i18next": "i18next"
         }),
         !isDevBuild ? undefined : new webpack.DefinePlugin({
             DHIS_CONFIG: JSON.stringify(dhisConfig),

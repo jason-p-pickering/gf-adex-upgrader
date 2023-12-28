@@ -15,29 +15,13 @@
             </div>
         </div>
         </a>
-        <p class="headerBarTitle">GF ADEx Upgrade Tool</p>
+        <p class="headerBarTitle">GF ADEx Indicator Updater</p>
         <button class="headerBarExit" onclick="location.href='../../..';">Exit</button>
     </div>
 
     <div class="mainView">
-
-<p>This tool will upgrade the GF ADEx indicators to the latest version of the GF ADEx template.</p>
-<h2>Step 1: Download the reference indicators from Github</h2>
-<p>Download a copy of the Global Fund ADEx indicators from GitHub here and save them locally.</p>
-<h2>Step 2: Upload a copy of the indicators to the DHIS2 datastore.</h2>
-<div>
-    <input type="file" id="jsonFileInput" accept=".json">
-    </p>
-</div>
-<div>
-    <button onclick="uploadReferenceJson()">Upload GFADex template</button>
-</div>
-
-<h2>Step 3: Upgrade the indicators</h2>
-<button onclick="upgradeIndicators()">Upgrade</button>
-</div>
-<div id="upgradeStatus">
-</div>
+    <div id="appContent">
+    </div>
+    </div>
 </body>
-
 </html>

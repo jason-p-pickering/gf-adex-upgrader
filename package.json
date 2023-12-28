@@ -1,9 +1,9 @@
 {
   "name": "gfadex_indicator_upgrader",
-  "description": "GFADEX Indicator Upgrade Tool",
+  "description": "GF ADEx Indicator Update Tool",
   "version": "0.1.0",
   "dependencies": {
-    "jquery": "^3.7.1"
+    "i18next": "^23.7.11"
   },
   "devDependencies": {
     "@dhis2/cli-style": "github:dhis2/cli-style",

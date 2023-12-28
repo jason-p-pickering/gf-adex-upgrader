@@ -9,6 +9,7 @@ import {uploadReferenceJson} from "./js/utils.js";
 import {getIndicatorsFromDataStore} from "./js/utils.js";
 import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
+import { emitIntroduction } from "./js/utils.js";
 
 var baseUrl = getContextPath() + "/api/";
 var userLocale = "en";
@@ -20,9 +21,10 @@ window.getIndicatorsFromDataStore = getIndicatorsFromDataStore;
 window.upgradeIndicators = upgradeIndicators;
 window.userLocale = userLocale;
 window.fetchUserLocale = fetchUserLocale;
+window.emitIntroduction = emitIntroduction;
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     userLocale = fetchUserLocale();
-    console.log("User locale is : ", userLocale);
-    //fetchSummaryMetadata();
+    emitIntroduction();
+
 });
