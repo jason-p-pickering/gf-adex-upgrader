@@ -24,5 +24,19 @@
     "title": "Steg 3: Uppdatera GFADex-metadata",
     "content": "När du har slutfört steg 1 och 2, klicka på knappen \"Uppdatera GF ADEx-metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Den här processen påverkar inte någon av dina befintliga data men uppdaterar metadata. Processen tar några minuter att slutföra. När processen är klar, kommer du att se en sammanfattning av importprocessen nedan."
   },
-  "update-metadata-btn": "Uppdatera GF ADEx-metadata"
+  "update-metadata-btn": "Uppdatera GF ADEx-metadata",
+  "json-upload-success": "GF ADEX-metadata uppladdat",
+  "json-upload-error": "Misslyckades med att ladda upp GF ADEX-metadata",
+  "json-invalid": "Den JSON-fil du laddade upp är ogiltig. Vänligen kontrollera filen och försök igen.",
+  "upgrade-status-report": "Uppgraderingsstatusrapport",
+  "object-type": "Objekttyp",
+  "created": "Skapad",
+  "updated": "Uppdaterad",
+  "deleted": "Raderad",
+  "ignored": "Ignorerad",
+  "total": "Totalt",
+  "unknown-gfadex-indicators": "Okända GFADEx-indikatorer",
+  "status": "Status",
+  "status-code": "Statuskod",
+  "loading": "Laddar...vär snäll och vänta"
 }

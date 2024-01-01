@@ -24,5 +24,19 @@
     "title": "Etapa 3: Atualize os metadados GFADex",
     "content": "Após concluir as Etapas 1 e 2, clique no botão \"Atualizar Metadados GF ADEx\" abaixo. Isso atualizará os metadados GF ADEx em sua instância do DHIS2. Este processo não afetará nenhum de seus dados existentes, mas atualizará os metadados. Este processo levará alguns minutos para ser concluído. Uma vez concluído, você verá um resumo do processo de importação abaixo."
   },
-  "update-metadata-btn": "Atualizar Metadados GF ADEx"
+  "update-metadata-btn": "Atualizar Metadados GF ADEx",
+  "json-upload-success": "Metadados GF ADEX carregados com sucesso",
+  "json-upload-error": "Falha no carregamento de metadados GF ADEX",
+  "json-invalid": "O arquivo JSON que você enviou é inválido. Por favor, verifique o arquivo e tente novamente.",
+  "upgrade-status-report": "Relatório de Status de Atualização",
+  "object-type": "Tipo de Objeto",
+  "created": "Criado",
+  "updated": "Atualizado",
+  "deleted": "Excluído",
+  "ignored": "Ignorado",
+  "total": "Total",
+  "unknown-gfadex-indicators": "Indicadores GFADEx Desconhecidos",
+  "status": "Status",
+  "status-code": "Código de Status",
+  "loading" : "Carregando..."
 }
