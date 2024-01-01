@@ -23,6 +23,18 @@
     "title": "Étape 3 : Mettez à jour les métadonnées GFADex",
     "content": "Une fois que vous avez terminé les étapes 1 et 2, cliquez sur le bouton \"Mettre à jour les métadonnées GF ADEx\" ci-dessous. Cela mettra à jour les métadonnées GF ADEx dans votre instance DHIS2. Ce processus n'affectera pas vos données existantes, mais mettra à jour les métadonnées. Ce processus prendra quelques minutes pour se terminer. Une fois le processus terminé, vous verrez un résumé du processus d'importation ci-dessous."
   },
-  "update-metadata-btn": "Mettre à jour les métadonnées GF ADEx"
-  
+  "update-metadata-btn": "Mettre à jour les métadonnées GF ADEx",
+  "json-upload-success": "Métadonnées GF ADEX téléchargées avec succès",
+  "json-upload-error" : "Erreur lors du téléchargement des métadonnées GF ADEX",
+  "json-invalid": "Le fichier JSON n'est pas valide. Veuillez vérifier le fichier et réessayer.",
+  "upgrade-status-report" : "Rapport d'état de la mise à niveau",
+  "object-type": "Type d'objet",
+  "created": "Créé",
+  "updated": "Mis à jour",
+  "deleted": "Supprimé",
+  "ignored": "Ignoré",
+  "total": "Total",
+  "unknown-gfadex-indicators": "Indicateurs GFADEx inconnus",
+  "status": "Statut",
+  "status-code": "Code de statut"
 }

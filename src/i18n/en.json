@@ -9,8 +9,7 @@
   },
   "step1": {
     "title": "Step 1: Download the latest package",
-    "content": "Click on the button below to download the latest package. The package will be downloaded to your computer."
-  },
+    "content": "Head over to GitHub and download <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">the latest version</a> of the GF ADEx metadata package. Save this to your local computer."},
   "step2": {
     "title": "Step 2: Upload a copy of the GF ADEX metadata to the DHIS2 datastore.",
     "content": "Using the file which you downloaded from Step 1, choose the file to upload it and then click \"Upload GFADEx template\". This will save a copy of the GF ADEx metadata in the local datastore."},
@@ -21,7 +20,21 @@
     },
     "step3" : {
       "title": "Step 3: Update GFADex metadata",
-      "content": "Once you have completed Step 1 and 2, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data, but will update the metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
+      "content": "Once you have completed Step 1 and 2, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data or metadata other than the GFADEx metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
     },
-    "update-metadata-btn": "Update GF ADEx Metadata"
+    "update-metadata-btn": "Update GF ADEx Metadata",
+    "json-upload-success" : "GF ADEX metadata uploaded successfully",
+    "json-upload-error" : "GF ADEX metadata upload failed",
+    "json-invalid": "The JSON file you uploaded is invalid. Please check the file and try again.",
+    "upgrade-status-report": "Upgrade Status Report",
+    "object-type": "Object Type",
+    "created": "Created",
+    "updated" : "Updated",
+    "deleted" : "Deleted",
+    "ignored" : "Ignored",
+    "total": "Total",
+    "unknown-gfadex-indicators": "Unknown GFADEx Indicators",
+    "status"  : "Status",
+    "status-code" : "Status Code",
+    "loading" : "Loading...please wait."
 }

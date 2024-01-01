@@ -12,23 +12,27 @@ import { fetchUserLocale } from "./js/utils.js";
 import Translator from "@andreasremdt/simple-translator";
 
 var baseUrl = getContextPath() + "/api/";
+var userLocale = false;
 const appLocation = window.location.pathname;
 const appFolder = appLocation.substring(0, appLocation.lastIndexOf("/"));
-console.log("App folder is : ", appFolder);
 const i18nLocation = appFolder + "/i18n/";
 
 var translator = new Translator({
     defaultLanguage : "en",
+    persist : true,
+    registerGlobally: "__",
+    debug : true,
     filesLocation : i18nLocation}
 );
-
-console.log("Baseurl is : ", baseUrl);
+console.log("Translator is : ", translator.defaultLanguage);
 
 window.baseUrl = baseUrl;
 window.uploadReferenceJson = uploadReferenceJson;
 window.getIndicatorsFromDataStore = getIndicatorsFromDataStore;
 window.upgradeIndicators = upgradeIndicators;
 window.fetchUserLocale = fetchUserLocale;
+window.translator = translator;
+window.userLocale = userLocale;
 
 let input = document.querySelector("#jsonFileInput");
 let uploadButton = document.querySelector("#upload-btn");
@@ -42,16 +46,19 @@ input.addEventListener("input", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetchUserLocale().then((userLocale) => {
+    fetchUserLocale().then((locale) => {
+        console.log("Detected locale is : ", locale);
         const availableLanguages = ["en", "fr", "pt", "sv"];
         const defaultLanguage = "en";
         //If the user locale is not in the tranlsation list, use the default language
-        if (!availableLanguages.includes(userLocale)) {
-            userLocale = defaultLanguage;
+        if (!availableLanguages.includes(locale)) {
+            locale = defaultLanguage;
         }
-
-        translator.fetch(userLocale).then(() => {
-            // -> Translations are ready...
+        //Set the global user locale
+        userLocale = locale;
+        console.log("User locale is : ", userLocale);
+        translator.fetch(availableLanguages, true).then(() => {
+        // -> Translations are ready...
             translator.translatePageTo(userLocale);
         });
     });
