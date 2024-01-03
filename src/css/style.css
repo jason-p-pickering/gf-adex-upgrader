@@ -2,7 +2,7 @@ body {
 	font-family: Roboto, sans-serif;
 }
 
-.headerBar { 
+.headerBar {
 	display: flex;
 	align-items: center;
 	height: 47px;
@@ -10,7 +10,6 @@ body {
 	color: white;
 	background-color: rgb(44, 102, 147);
 	border-bottom: 1px solid rgba(32, 32, 32, 0.15);
-	
 	position: fixed;
 	top: 0px;
 	left: 0px;
@@ -23,8 +22,8 @@ body {
 
 .headerBarLogoBox {
 	display: flex;
-	height: 40px; 
-	width: 40px; 
+	height: 40px;
+	width: 40px;
 	padding: 4px;
 	justify-content: center;
 	align-items: center;
@@ -38,7 +37,7 @@ body {
 .headerBarTitle {
 	box-sizing: border-box;
 	height: 16px;
-	line-height: 16.1px; 
+	line-height: 16.1px;
 }
 
 .headerBarExit {
@@ -47,7 +46,7 @@ body {
 	box-sizing: border-box;
 	margin-right: 8px;
 	padding : 5px 15px;
-	float: right; 
+	float: right;
 }
 
 .mainView {

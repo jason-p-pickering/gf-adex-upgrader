@@ -1,42 +1,48 @@
 {
   "header": {
-    "title": "GF ADEX Metadata Manager",
-    "exit": "Avsluta"
+    "title": "GF ADEX Pakethanterare",
+    "exit" : "Avsluta"
   },
   "introduction": {
     "title": "Introduktion",
-    "content": "Den här appen hjälper dig att uppdatera till den senaste versionen av GF ADEx-metadatapaketet. Följ stegen nedan för att uppgradera paketet. Alla GF ADEX-relaterade metadata, såsom indikatorer och indikatorgrupper, kommer att uppdateras. Alla ändringar du har gjort i täljaredefinitionerna kommer att bevaras."
+    "content": "Denna app hjälper dig att uppdatera till den senaste versionen av GF ADEx-metadatapaketet. Följ stegen nedan för att uppgradera paketet. All GF ADEX-relaterad metadata, såsom indikatorer och indikatorgrupper, kommer att uppdateras. Eventuella ändringar som du har gjort i täljaredefinitionerna kommer att bevaras."
   },
-  "step1": {
-    "title": "Steg 1: Ladda ner det senaste paketet",
-    "content": "Klicka på knappen nedan för att ladda ner det senaste paketet. Paketet kommer att laddas ner till din dator."
+  "download-package": {
+    "title": "Ladda ner det senaste paketet",
+    "content": "Gå till GitHub och ladda ner <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">den senaste versionen</a> av GF ADEx-metadatapaketet. Spara detta på din lokala dator."
   },
-  "step2": {
-    "title": "Steg 2: Ladda upp en kopia av GF ADEX-metadata till DHIS2-datastore.",
-    "content": "Använd filen som du laddade ner från steg 1, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta kommer att spara en kopia av GF ADEx-metadata i den lokala datastoren."
+  "upload-to-datastore": {
+    "title": "Ladda upp en kopia av GF ADEX-metadata till DHIS2-datastoren.",
+    "content": "Använd filen som du laddade ner från föregående steg, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta kommer att spara en kopia av GF ADEx-metadata i den lokala datastoren."
   },
   "upload-btn": {
     "choose": "Välj fil",
     "no-file-chosen": "Ingen fil vald",
     "upload": "Ladda upp GFADEx-mall"
   },
-  "step3": {
-    "title": "Steg 3: Uppdatera GFADex-metadata",
-    "content": "När du har slutfört steg 1 och 2, klicka på knappen \"Uppdatera GF ADEx-metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Den här processen påverkar inte någon av dina befintliga data men uppdaterar metadata. Processen tar några minuter att slutföra. När processen är klar, kommer du att se en sammanfattning av importprocessen nedan."
+  "update-local" : {
+    "title": "Uppdatera GFADex-metadata",
+    "content": "När du har slutfört de tidigare stegen, klicka på knappen \"Uppdatera GF ADEx Metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Denna process påverkar inte några av dina befintliga data eller metadata förutom GFADEx-metadata. Denna process tar några minuter att slutföra. När processen är klar kommer du att se en sammanfattning av importprocessen nedan."
   },
-  "update-metadata-btn": "Uppdatera GF ADEx-metadata",
-  "json-upload-success": "GF ADEX-metadata uppladdat",
-  "json-upload-error": "Misslyckades med att ladda upp GF ADEX-metadata",
-  "json-invalid": "Den JSON-fil du laddade upp är ogiltig. Vänligen kontrollera filen och försök igen.",
+  "update-metadata-btn": "Uppdatera GF ADEx Metadata",
+  "json-upload-success" : "GF ADEX-metadata uppladdat framgångsrikt",
+  "json-upload-error" : "Misslyckades att ladda upp GF ADEX-metadata",
+  "json-invalid": "Den JSON-fil du laddade upp är ogiltig. Kontrollera filen och försök igen.",
   "upgrade-status-report": "Uppgraderingsstatusrapport",
   "object-type": "Objekttyp",
   "created": "Skapad",
-  "updated": "Uppdaterad",
-  "deleted": "Raderad",
-  "ignored": "Ignorerad",
+  "updated" : "Uppdaterad",
+  "deleted" : "Raderad",
+  "ignored" : "Ignorerad",
   "total": "Totalt",
   "unknown-gfadex-indicators": "Okända GFADEx-indikatorer",
-  "status": "Status",
-  "status-code": "Statuskod",
-  "loading": "Laddar...vär snäll och vänta"
+  "status"  : "Status",
+  "status-code" : "Statuskod",
+  "loading" : "Laddar... var god vänta.",
+  "backup-config":    {
+    "title": "Säkerhetskopiera din lokala konfiguration",
+    "content": "Innan du fortsätter, var god säkerhetskopiera din lokala konfiguration. Detta gör att du kan återställa din lokala konfiguration om något går fel under uppgraderingsprocessen eller om du behöver återställa denna konfiguration på en annan system. Klicka på knappen \"Säkerhetskopiera\" nedan för att säkerhetskopiera din lokala konfiguration.",
+    "backup-btn": "Säkerhetskopiera",
+    "configured-only" : "Säkerhetskopiera endast konfigurerade indikatorer"
+  }
 }
