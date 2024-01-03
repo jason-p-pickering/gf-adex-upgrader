@@ -25,10 +25,10 @@ jobs:
     - name: Build
       run: |
         npm install
-        yarn run zip
-    - name: Archive production artifacts
+        npx webpack
+    - name: Archive app
       uses: actions/upload-artifact@v3
       with:
-          name: zip-file
+          name: gf-adex-upgrader
           path: |
-            compiled
+            build
