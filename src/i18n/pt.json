@@ -1,42 +1,46 @@
 {
   "header": {
     "title": "Gerenciador de Pacotes GF ADEX",
-    "exit": "Sair"
+    "exit" : "Sair"
   },
   "introduction": {
-    "title": "Introdução",
-    "content": "Este aplicativo ajudará você a atualizar para a versão mais recente do pacote de metadados GF ADEx. Siga as etapas abaixo para fazer a atualização. Todas as metadados relacionadas ao GF ADEX, como indicadores e grupos de indicadores, serão atualizadas. Todas as alterações que você fez nas definições de numeradores serão preservadas."
+    "title": "Introduction",
+    "content": "This app will help you to update to the latest version of the GF ADEx metadata package. Follow the steps below to upgrade the package. All GF ADEX related metadata such as indicators, indicator groups will be updated. Any changes which you have made to the numerator definitions will be preserved."
   },
-  "step1": {
-    "title": "Etapa 1: Baixe o pacote mais recente",
-    "content": "Clique no botão abaixo para baixar o pacote mais recente. O pacote será baixado para o seu computador."
-  },
-  "step2": {
-    "title": "Etapa 2: Envie uma cópia dos metadados GF ADEX para o datastore do DHIS2.",
-    "content": "Usando o arquivo que você baixou na Etapa 1, escolha o arquivo para enviá-lo e clique em \"Enviar modelo GFADEx\". Isso salvará uma cópia dos metadados GF ADEx no datastore local."
-  },
-  "upload-btn": {
-    "choose": "Escolher arquivo",
-    "no-file-chosen": "Nenhum arquivo escolhido",
-    "upload": "Enviar modelo GFADEx"
-  },
-  "step3": {
-    "title": "Etapa 3: Atualize os metadados GFADex",
-    "content": "Após concluir as Etapas 1 e 2, clique no botão \"Atualizar Metadados GF ADEx\" abaixo. Isso atualizará os metadados GF ADEx em sua instância do DHIS2. Este processo não afetará nenhum de seus dados existentes, mas atualizará os metadados. Este processo levará alguns minutos para ser concluído. Uma vez concluído, você verá um resumo do processo de importação abaixo."
-  },
-  "update-metadata-btn": "Atualizar Metadados GF ADEx",
-  "json-upload-success": "Metadados GF ADEX carregados com sucesso",
-  "json-upload-error": "Falha no carregamento de metadados GF ADEX",
-  "json-invalid": "O arquivo JSON que você enviou é inválido. Por favor, verifique o arquivo e tente novamente.",
-  "upgrade-status-report": "Relatório de Status de Atualização",
-  "object-type": "Tipo de Objeto",
-  "created": "Criado",
-  "updated": "Atualizado",
-  "deleted": "Excluído",
-  "ignored": "Ignorado",
-  "total": "Total",
-  "unknown-gfadex-indicators": "Indicadores GFADEx Desconhecidos",
-  "status": "Status",
-  "status-code": "Código de Status",
-  "loading" : "Carregando..."
+  "download-package": {
+    "title": "Download the latest package",
+    "content": "Head over to GitHub and download <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">the latest version</a> of the GF ADEx metadata package. Save this to your local computer."},
+  "upload-to-datastore": {
+    "title": "Upload a copy of the GF ADEX metadata to the DHIS2 datastore.",
+    "content": "Using the file which you downloaded from the previous step, choose the file to upload it and then click \"Upload GFADEx template\". This will save a copy of the GF ADEx metadata in the local datastore."},
+    "upload-btn": {
+      "choose": "Choose file",
+      "no-file-chosen": "No file chosen",
+      "upload": "Upload GFADEx template"
+    },
+    "update-local" : {
+      "title": "Update GFADex metadata",
+      "content": "Once you have completed the previous steps, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data or metadata other than the GFADEx metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
+    },
+    "update-metadata-btn": "Update GF ADEx Metadata",
+    "json-upload-success" : "GF ADEX metadata uploaded successfully",
+    "json-upload-error" : "GF ADEX metadata upload failed",
+    "json-invalid": "The JSON file you uploaded is invalid. Please check the file and try again.",
+    "upgrade-status-report": "Upgrade Status Report",
+    "object-type": "Object Type",
+    "created": "Created",
+    "updated" : "Updated",
+    "deleted" : "Deleted",
+    "ignored" : "Ignored",
+    "total": "Total",
+    "unknown-gfadex-indicators": "Unknown GFADEx Indicators",
+    "status"  : "Status",
+    "status-code" : "Status Code",
+    "loading" : "Loading...please wait.",
+    "backup-config":    {
+      "title": "Backup your local configuration",
+      "content": "Before you proceed, please backup your local configuration. This will allow you to restore your local configuration in case something goes wrong during the upgrade process or if you need to restore this configuration on another system. Click the \"Backup\" button below to backup your local configuration.",
+      "backup-btn": "Backup",
+      "configured-only" : "Only backup configured indicators"
+    }
 }

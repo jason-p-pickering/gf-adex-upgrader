@@ -21,10 +21,10 @@
     "webpack-dev-server": "^4.15.1"
   },
   "browser": {
-  "fs": false,
-  "path": false,
-  "os": false
-},
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "main": "./src/app.js",
   "scripts": {
     "build": "webpack --progress",

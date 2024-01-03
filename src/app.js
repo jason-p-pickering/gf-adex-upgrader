@@ -9,6 +9,7 @@ import { uploadReferenceJson } from "./js/utils.js";
 import { getIndicatorsFromDataStore } from "./js/utils.js";
 import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
+import { backupLocalConfig } from "./js/utils.js";
 import Translator from "@andreasremdt/simple-translator";
 
 var baseUrl = getContextPath() + "/api/";
@@ -33,6 +34,7 @@ window.upgradeIndicators = upgradeIndicators;
 window.fetchUserLocale = fetchUserLocale;
 window.translator = translator;
 window.userLocale = userLocale;
+window.backupLocalConfig = backupLocalConfig;
 
 let input = document.querySelector("#jsonFileInput");
 let uploadButton = document.querySelector("#upload-btn");
@@ -63,3 +65,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
