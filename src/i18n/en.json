@@ -1,15 +1,15 @@
 {
   "header": {
-    "title": "GF ADEX Package Manager",
+    "title": "GF ADEx Flow App",
     "exit" : "Exit"
   },
   "introduction": {
     "title": "Introduction",
-    "content": "This app will help you to update to the latest version of the GF ADEx metadata package. Follow the steps below to upgrade the package. All GF ADEX related metadata such as indicators, indicator groups will be updated. Any changes which you have made to the numerator definitions will be preserved."
+    "content": "This app will help manage your Global Fund ADEx Metadata. The Global Fund may periodically release new versions of the ADEx metadata. This app will help you upgrade your existing GFADex metadata to the latest version. This app will not affect any of your existing data or metadata other than the GFADEx metadata. This app will also allow you to export your local GFADEx metadata to a JSON file which you can then import into another DHIS2 instance."
   },
   "download-package": {
     "title": "Download the latest package",
-    "content": "Head over to GitHub and download <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">the latest version</a> of the GF ADEx metadata package. Save this to your local computer."},
+    "content": "Head over to GitHub and download <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">the latest version</a> of the GF ADEx metadata package. Save this file to your local computer."},
   "upload-to-datastore": {
     "title": "Upload a copy of the GF ADEX metadata to the DHIS2 datastore.",
     "content": "Using the file which you downloaded from the previous step, choose the file to upload it and then click \"Upload GFADEx template\". This will save a copy of the GF ADEx metadata in the local datastore."},
@@ -20,7 +20,7 @@
     },
     "update-local" : {
       "title": "Update GFADex metadata",
-      "content": "Once you have completed the previous steps, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will not affect any of your existing data or metadata other than the GFADEx metadata. This process will take a few minutes to complete. Once the process completes, you will see a summary of the import process below."
+      "content": "Once you have completed the previous steps, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will take a few minutes to complete. Once the process completes, you will see a summary below."
     },
     "update-metadata-btn": "Update GF ADEx Metadata",
     "json-upload-success" : "GF ADEX metadata uploaded successfully",
@@ -38,11 +38,26 @@
     "status-code" : "Status Code",
     "loading" : "Loading...please wait.",
     "backup-config":    {
-      "title": "Backup your local configuration",
-      "content": "Before you proceed, please backup your local configuration. This will allow you to restore your local configuration in case something goes wrong during the upgrade process or if you need to restore this configuration on another system. Click the \"Backup\" button below to backup your local configuration.",
-      "backup-btn": "Backup",
-      "configured-only" : "Only backup configured indicators"
+      "title": "Backup your local indicators",
+      "content": "Before you proceed, please backup your local local indicators. This will allow you to restore your local indicators in case something goes wrong during the upgrade process. Click the \"Backup local indicators\" button below to proceed.",
+      "backup-btn": "Backup local indicators"
     },
-    "no-remote-metadata" : "No GFADEx template metadata found in the datastore. Please upload the GFADEx template metadata to the datastore and try again.",
-    "no-local-gfadex-indicators": "No GFADEx indicators found in the local DHIS2 instance. Please import the GFADEx template metadata and try again."
+    "no-remote-metadata" : "No GFADEx template metadata found in the datastore. Please upload the GFADEx template metadata to the datastore and try again",
+    "no-local-gfadex-indicators": "No GFADEx indicators found in the local DHIS2 instance. Please import the GFADEx template metadata and try again.",
+    "upgrade-error": "Error upgrading existing GF metadata. Please try again.",
+    "export-local-package" : {
+      "title": "Export local GFADEx package",
+      "content": "If you need to transfer your indicators to another DHIS2 instance, click the \"Export local package\" button below. This will export the local GFADEx metadata to a JSON file which you can save to your local computer. You can then use this metadata file to import into another DHIS2 instance. Note that only indicators which have been configured in the local DHIS2 instance will be included!",
+      "export-btn": "Export local package"
+    },
+    "import-package" : {
+      "title": "Import GFADEx package",
+      "content": "Once you have uploaded the ADEx package to the DHIS2 datastore, you can import the package into your local DHIS2 instance. Click the \"Import package\" button below to proceed. This will import the GFADEx metadata from the datastore into your local DHIS2 instance.",
+      "import-btn": "Import package",
+      "existing-package-warning": "It looks like you already have GFADex metadata in your local DHIS2 instance. Importing the package will overwrite your existing GFADex metadata. Please use the upgrade process instead."
+    },
+    "validation-report" : {
+      "title": "Validation Report",
+      "run-validation-btn": "Run Validation"
+    } 
 }

@@ -14,7 +14,7 @@ export function getContextPath() {
 
 export var baseUrl = getContextPath() + "/api/";
 
-async function d2Fetch(endpoint) {
+export async function d2Fetch(endpoint) {
     return new Promise(function (resolve, reject) {
         fetch(baseUrl + endpoint, {
             method: "GET",
@@ -35,7 +35,7 @@ async function d2Fetch(endpoint) {
 }
 
 //Fetch the GF indicators (based on [GFADEX] code in name)
-async function fetchIndicators() {
+export async function fetchIndicators() {
     var data = await d2Fetch(
         "indicators.json?filter=name:$like:[GFADEX]&fields=:owner&paging=false"
     );
@@ -47,7 +47,7 @@ async function fetchIndicators() {
     }
 }
 
-export function getIndicatorsFromDataStore() {
+export function fetchIndicatorsFromDataStore() {
     return new Promise(function (resolve, reject) {
         fetch(baseUrl + "dataStore/gfadex/remote", {
             method: "GET",
@@ -67,34 +67,32 @@ export function getIndicatorsFromDataStore() {
     });
 }
 
-export async function upgradeExistingIndicators(remote, existingIndicators) {
+export async function upgradeExistingIndicators(remote, local) {
+    let remoteIndicators = remote.indicators;
 
-    //Show the loading message
-    showLoading();
-    //If we have existing indicators, update them with the existing inidcators numerator
-    if (existingIndicators) {
-        remote.indicators.forEach((remoteIndicator) => {
-            const existingIndicator = existingIndicators.find(
-                (indicator) => indicator.id === remoteIndicator.id
-            );
+    local.forEach((indicator) => {
+        //Update the remote indicator with the local indicator
+        const remoteIndicator = remote.indicators.find(
+            (remoteIndicator) => remoteIndicator.id === indicator.id
+        );
+        if (remoteIndicator) {
+            remoteIndicator.numerator = indicator.numerator;
+        }});
 
-            if (existingIndicator) {
-                remoteIndicator.numerator = existingIndicator.numerator;
-            }
-        });
-    }
+    remote.indicators = remoteIndicators;
 
     //Identify the indicators which need to be deleted
     const indicatorsToDelete = identifyIndicatorsToDelete(
-        existingIndicators,
+        local,
         remote.indicators
     );
 
-    //Generate the list and append it to the DOM
+    //Generate the list of indicators to delete
     const indicatorsToDeleteList = createIndicatorsToDeleteList(indicatorsToDelete);
 
     //Upload the rest of the metadata package to the /metadata
     //endpoint. Alert the user if an error occurs.
+
     fetch(baseUrl + "metadata", {
         method: "POST",
         headers: {
@@ -108,12 +106,12 @@ export async function upgradeExistingIndicators(remote, existingIndicators) {
         })
         .catch((error) => {
             console.error("Error upgrading existing GF metadata:", error);
-            alert("Error upgrading existing GF metadata. Please try again.");
+            alert(__("upgrade-error"));
         });
 }
 
 /* global __ */
-function renderUpgradeStatusReport(statusReport, indicatorsToDeleteList) {
+export function renderUpgradeStatusReport(statusReport, indicatorsToDeleteList) {
     //Just display the raw JSON as text
     // var html = "<h3>Upgrade Status Report</h3>";
     // html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
@@ -128,11 +126,23 @@ function renderUpgradeStatusReport(statusReport, indicatorsToDeleteList) {
 }
 
 export async function upgradeIndicators() {
-    //Disable the update button
+    showLoading();
     document.querySelector("#update-gf-metadata-btn").disabled = true;
-    const remoteIndicators = await getIndicatorsFromDataStore();
-    const existingIndicators = await fetchIndicators();
-    upgradeExistingIndicators(remoteIndicators, existingIndicators);
+    const remote = await fetchIndicatorsFromDataStore();
+    const local = await fetchIndicators();
+    console.log("Remote metadata is : ", remote);
+    if (!remote.indicators) {
+        resetUpgradeStatus();
+        alert(__("no-remote-metadata"));
+        return;
+    }
+    //If we don't have any local indicators, then alert the user
+    if (local.length === 0) {
+        resetUpgradeStatus();
+        alert(__("no-local-gfadex-indicators"));
+        return;
+    }
+    upgradeExistingIndicators(remote, local);
 }
 
 export function verifyRemoteMetadata(remote) {
@@ -224,7 +234,7 @@ export function uploadReferenceJson() {
                 })
                     .then((response) => response.json())
                     .then(() => {
-                        document.querySelector("#update-gf-metadata-btn").disabled = false;
+                        // document.querySelector("#update-gf-metadata-btn").disabled = false;
                         const msg = __("json-upload-success");
                         alert(msg);
                     })
@@ -301,7 +311,6 @@ function identifyIndicatorsToDelete(existingIndicators, remoteIndicators) {
         (indicator) => !remoteIndicatorIds.includes(indicator.id)
     );
 
-    console.log("Indicators to delete:", indicatorsToDelete.length);
     if (indicatorsToDelete.length === 0) {
         return [];
     }
@@ -342,69 +351,70 @@ async function fetchLocalDataExchanges() {
     const data = await d2Fetch("aggregateDataExchanges.json?filter=target.api.url:like:globalfund&fields=*&paging=false");
     if (!data || data.aggregateDataExchanges.length === 0) {
         console.log("No GF data exchanges found");
-        return false;
+        return [];
     }
     else {
         return data.aggregateDataExchanges;
     }
 }
 
-async function createLocalBackup(includeConfiguredOnly = false) {
+
+async function createLocalPackage(includeConfiguredOnly = false) {
     //Fetch the remote metadata
-    let remote = await getIndicatorsFromDataStore();
+    let remote = await fetchIndicatorsFromDataStore();
     //There might not be anything in the datastore, if so, then alert the user
     if (!remote || remote.length === 0) {
         alert(__("no-remote-metadata"));
         return;
     }
+
     //Fetch the local metadata
-    let local = await fetchIndicators();
+    let localIndicators = await fetchIndicators();
     //There might not be indicators in the local metadata, if so, then alert the user
-    if (!local || local.length === 0) {
+    if (!localIndicators || localIndicators.length === 0) {
         alert(__("no-local-gfadex-indicators"));
         return;
     }
-
     if (includeConfiguredOnly) {
-        local = local.filter((indicator) => indicator.numerator.trim() != "0");
-        //Filter out the remote indicators based on the id of the local indicators
-        remote.indicators = remote.indicators.filter((remoteIndicator) =>
-            local.find((indicator) => indicator.id === remoteIndicator.id)
-        );
-
+        localIndicators = localIndicators.filter((indicator) => indicator.numerator.trim() != "0");
     }
-    //Update the remote indicators with the local numerator
-    remote.indicators.forEach((remoteIndicator) => {
-        const localIndicator = local.find(
-            (indicator) => indicator.id === remoteIndicator.id
-        );
+    //Replace the remote indicators with the local indicators
+    remote.indicators = localIndicators;
 
-        if (localIndicator) {
-            remoteIndicator.numerator = localIndicator.numerator;
-        }
-    });
+    //Get a map of indicator ids for easy lookup
+    const indicatorIds = localIndicators.map((indicator) => indicator.id);
 
-    // For each of the ,"indicators":[{"id":"aLZSXHjxCiK"},{"id":"rcxY82zJ4nX"},
-    // in the indicator groups, filter out the indicators which are not in the remote
-    // metadata
     remote.indicatorGroups.forEach((indicatorGroup) => {
-        indicatorGroup.indicators = indicatorGroup.indicators.filter((indicator) =>
-            remote.indicators.find((remoteIndicator) => remoteIndicator.id === indicator.id)
-        );
+        let filteredIndicators = [];
+        indicatorGroup.indicators.forEach((indicator) => {
+            if (indicatorIds.includes(indicator.id)) {
+                filteredIndicators.push({id: indicator.id});
+            }
+        });
+        indicatorGroup.indicators = filteredIndicators;
     });
 
     //Append the data exchange to the remote metadata
     const dataExchanges = await fetchLocalDataExchanges();
-    remote.dataExchanges = dataExchanges;
+    remote.aggregateDataExchanges = dataExchanges;
 
     //Create the backup object
     return remote;
 }
 
-export async function backupLocalConfig() {
+export async function exportLocalIndicators() {
+    const localIndicators = await fetchIndicators();
+    const localConfig = { indicators: localIndicators};
+    exportJsonData(localConfig);
+}
+
+export async function exportLocalPackage() {
+    const localConfig = await createLocalPackage();
+    exportJsonData(localConfig);
+}
+
+async function exportJsonData(json_data) {
     showLoading();
-    var includeConfiguredOnly = document.querySelector("#configured-only").checked;
-    let json_data = await createLocalBackup(includeConfiguredOnly);
     //There might not be anything in the backup, if so skip the download
     if (json_data) {
         let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json_data));

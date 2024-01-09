@@ -2,15 +2,41 @@
 
 //CSS
 import "./css/style.css";
+import "datatables.net-dt/css/jquery.dataTables.css";
 
+//External libs
+import Translator from "@andreasremdt/simple-translator";
+import $ from "jquery";
+window.$ = $;
+window.jQuery = $;
+import DataTable from "datatables.net";
+window.DataTable = DataTable;
+import * as jspdf from "jspdf";
+window.jspdf = jspdf;
+import "jspdf-autotable";
 //JS
+
 import { getContextPath } from "./js/utils.js";
 import { uploadReferenceJson } from "./js/utils.js";
-import { getIndicatorsFromDataStore } from "./js/utils.js";
+import { fetchIndicatorsFromDataStore } from "./js/utils.js";
 import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
-import { backupLocalConfig } from "./js/utils.js";
-import Translator from "@andreasremdt/simple-translator";
+import { exportLocalIndicators } from "./js/utils.js";
+import { exportLocalPackage } from "./js/utils.js";
+import { CurrentDate } from "./components/CurrentDate.js";
+import { HeaderBar } from "./components/HeaderBar.js";
+import  { showIntroduction } from "./views/showIntroduction.js";
+import { showBackupWorkflow } from "./views/showBackupWorkflow.js";
+import { showDownloadReferencePackage } from "./views/showDownloadReferencePackage.js";
+import { showUploadToDataStore } from "./views/showUploadToDataStore.js";
+import { showUpdateIndicatorsWorkflow } from "./views/showUpdateIndicatorsWorkflow.js";
+import { showExportLocalPackageWorkflow } from "./views/showExportLocalPackageWorkflow.js";
+import { showGettingStarted } from "./views/showGettingStarted.js";
+import { importMetadataPackage } from "./components/ImportMetadataPackage.js";
+import { showValidationReport } from "./views/showValidationReport.js";
+import { runValidation, reportToPDF, configToCSV } from "./components/ValidationReport.js";
+
+
 
 var baseUrl = getContextPath() + "/api/";
 var userLocale = false;
@@ -25,40 +51,42 @@ var translator = new Translator({
     debug : true,
     filesLocation : i18nLocation}
 );
-console.log("Translator is : ", translator.defaultLanguage);
+
+//Register the custom elements
+window.customElements.define("current-date", CurrentDate);
+window.customElements.define("header-bar", HeaderBar);
 
 window.baseUrl = baseUrl;
 window.uploadReferenceJson = uploadReferenceJson;
-window.getIndicatorsFromDataStore = getIndicatorsFromDataStore;
+window.getIndicatorsFromDataStore = fetchIndicatorsFromDataStore;
 window.upgradeIndicators = upgradeIndicators;
 window.fetchUserLocale = fetchUserLocale;
 window.translator = translator;
 window.userLocale = userLocale;
-window.backupLocalConfig = backupLocalConfig;
-
-let input = document.querySelector("#jsonFileInput");
-let uploadButton = document.querySelector("#upload-btn");
-
-input.addEventListener("input", () => {
-    if (input.files.length > 0) {
-        uploadButton.disabled = false;
-    } else {
-        uploadButton.disabled = true;
-    }
-});
+window.exportLocalIndicators = exportLocalIndicators;
+window.exportLocalPackage = exportLocalPackage;
+window.showIntroduction = showIntroduction;
+window.showBackupWorkflow = showBackupWorkflow;
+window.showDownloadReferencePackage = showDownloadReferencePackage;
+window.showUploadToDataStore = showUploadToDataStore;
+window.showUpdateIndicatorsWorkflow = showUpdateIndicatorsWorkflow;
+window.showExportLocalPackageWorkflow = showExportLocalPackageWorkflow;
+window.showGettingStarted = showGettingStarted;
+window.importMetadataPackage = importMetadataPackage;
+window.showValidationReport = showValidationReport;
+window.runValidation = runValidation;
+window.reportToPDF = reportToPDF;
+window.configToCSV = configToCSV;
 
 document.addEventListener("DOMContentLoaded", function () {
     fetchUserLocale().then((locale) => {
-        console.log("Detected locale is : ", locale);
         const availableLanguages = ["en", "fr", "pt", "sv"];
         const defaultLanguage = "en";
         //If the user locale is not in the tranlsation list, use the default language
         if (!availableLanguages.includes(locale)) {
             locale = defaultLanguage;
         }
-        //Set the global user locale
         userLocale = locale;
-        console.log("User locale is : ", userLocale);
         translator.fetch(availableLanguages, true).then(() => {
         // -> Translations are ready...
             translator.translatePageTo(userLocale);
