@@ -1,19 +1,27 @@
 {
-  "name": "gfadex_metadata_manager",
-  "description": "GF ADEx Metadata Manager",
+  "name": "gf-adex-flow-app",
+  "description": "ADEx Flow",
   "version": "0.1.0",
   "dependencies": {
-    "@andreasremdt/simple-translator": "^2.0.4"
+    "@andreasremdt/simple-translator": "^2.0.4",
+    "datatables.net-dt": "^1.13.8",
+    "ejs": "^3.1.9",
+    "jquery": "^3.7.1",
+    "jquery-datatables": "^1.10.18",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1"
   },
   "devDependencies": {
     "@dhis2/cli-style": "github:dhis2/cli-style",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "d2-manifest": "^1.0.0",
-    "eslint": "^4.11.0",
+    "datatables.net": "^1.13.8",
+    "eslint": "^8.56.0",
     "file-loader": "^6.2.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
+    "jquery": "^3.7.1",
     "style-loader": "^3.3.3",
     "url-loader": "^4.1.1",
     "webpack": "^5.89.0",
@@ -45,7 +53,7 @@
       "48": "img/icons/app_logo_48x48.png",
       "96": "img/icons/app_logo_96x96.png"
     },
-    "name": "GF ADEx Metadata Manager",
+    "name": "ADEx Flow",
     "version": "0.1.0",
     "appType": "APP"
   }
