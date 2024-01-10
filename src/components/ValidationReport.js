@@ -520,9 +520,9 @@ function printValidationResults(validationResults) {
     }
 
     //Make the #validation result div scrollable
-     $("#validation-result").css("overflow", "visible");
-     $("#validation-result").css("overflow-y", "auto");
-     $("#validation-result").css("height", "90%");
+    $("#validation-result").css("overflow", "visible");
+    $("#validation-result").css("overflow-y", "auto");
+    $("#validation-result").css("height", "90%");
 
 }
 
