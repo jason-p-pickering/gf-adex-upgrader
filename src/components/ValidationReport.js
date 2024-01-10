@@ -520,8 +520,10 @@ function printValidationResults(validationResults) {
     }
 
     //Make the #validation result div scrollable
-    $("#validation-result").css("overflow-y", "scroll");
-    $("#validation-result").css("height", "800px");
+     $("#validation-result").css("overflow", "visible");
+     $("#validation-result").css("overflow-y", "auto");
+     $("#validation-result").css("height", "90%");
+
 }
 
 const relativeQuarters = ["THIS_QUARTER", "LAST_QUARTER", "QUARTERS_THIS_YEAR", "QUARTERS_LAST_YEAR", "LAST_4_QUARTERS"];
