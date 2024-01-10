@@ -58,6 +58,8 @@
     },
     "validation-report" : {
       "title": "Validation Report",
-      "run-validation-btn": "Run Validation"
-    } 
+      "run-validation-btn": "Run Validation",
+      "download-summary-btn": "Download Summary (CSV)",
+      "download-report-btn": "Download Report (PDF)"
+    }
 }

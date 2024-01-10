@@ -12,7 +12,7 @@ export function getContextPath() {
     return ctx;
 }
 
-export var baseUrl = getContextPath() + "/api/";
+export const baseUrl = getContextPath() + "/api/";
 
 export async function d2Fetch(endpoint) {
     return new Promise(function (resolve, reject) {
@@ -404,7 +404,7 @@ async function createLocalPackage(includeConfiguredOnly = false) {
 
 export async function exportLocalIndicators() {
     const localIndicators = await fetchIndicators();
-    const localConfig = { indicators: localIndicators};
+    const localConfig = { indicators: localIndicators };
     exportJsonData(localConfig);
 }
 

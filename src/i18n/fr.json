@@ -1,33 +1,33 @@
 {
   "header": {
-    "title": "Gestionnaire de paquets GF ADEX",
+    "title": "Application de Flux GF ADEx",
     "exit": "Quitter"
   },
   "introduction": {
     "title": "Introduction",
-    "content": "Cette application vous aidera à mettre à jour vers la dernière version du package de métadonnées GF ADEx. Suivez les étapes ci-dessous pour mettre à niveau le package. Toutes les métadonnées liées à GF ADEX telles que les indicateurs, les groupes d'indicateurs seront mises à jour. Toutes les modifications que vous avez apportées aux définitions du numérateur seront préservées."
+    "content": "Cette application vous aidera à gérer vos métadonnées ADEx du Fonds mondial. Le Fonds mondial peut périodiquement publier de nouvelles versions des métadonnées ADEx. Cette application vous permettra de mettre à jour vos métadonnées existantes du GFADex vers la dernière version. Cette application n'affectera aucune de vos données ou métadonnées existantes, sauf celles du GFADEx. Cette application vous permettra également d'exporter vos métadonnées locales du GFADEx vers un fichier JSON que vous pourrez ensuite importer dans une autre instance DHIS2."
   },
   "download-package": {
-    "title": "Téléchargez le dernier package",
-    "content": "Rendez-vous sur GitHub et téléchargez <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">la dernière version</a> du package de métadonnées GF ADEx. Enregistrez ceci sur votre ordinateur local."
+    "title": "Télécharger le dernier package",
+    "content": "Rendez-vous sur GitHub et téléchargez <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">la dernière version</a> du package de métadonnées GF ADEx. Enregistrez ce fichier sur votre ordinateur local."
   },
   "upload-to-datastore": {
-    "title": "Téléchargez une copie des métadonnées GF ADEX dans le datastore DHIS2.",
-    "content": "À l'aide du fichier que vous avez téléchargé lors de l'étape précédente, choisissez le fichier à télécharger, puis cliquez sur \"Télécharger le modèle GFADEx\". Cela sauvegardera une copie des métadonnées GF ADEx dans le datastore local."
+    "title": "Téléverser une copie des métadonnées GF ADEX dans le datastore DHIS2.",
+    "content": "À l'aide du fichier que vous avez téléchargé lors de l'étape précédente, choisissez le fichier à téléverser, puis cliquez sur \"Téléverser le modèle GFADEx\". Cela sauvegardera une copie des métadonnées GF ADEx dans le datastore local."
   },
   "upload-btn": {
-    "choose": "Choisir un fichier",
+    "choose": "Choisir le fichier",
     "no-file-chosen": "Aucun fichier choisi",
-    "upload": "Télécharger le modèle GFADEx"
+    "upload": "Téléverser le modèle GFADEx"
   },
   "update-local": {
-    "title": "Mise à jour des métadonnées GFADex",
-    "content": "Une fois que vous avez terminé les étapes précédentes, cliquez sur le bouton \"Mettre à jour les métadonnées GF ADEx\" ci-dessous. Cela mettra à jour les métadonnées GF ADEx dans votre instance DHIS2. Ce processus n'affectera pas vos données ou métadonnées existantes, à l'exception des métadonnées GFADEx. Ce processus prendra quelques minutes pour se terminer. Une fois le processus terminé, vous verrez un résumé du processus d'importation ci-dessous."
+    "title": "Mettre à jour les métadonnées GFADex",
+    "content": "Une fois que vous avez terminé les étapes précédentes, cliquez sur le bouton \"Mettre à jour les métadonnées GF ADEx\" ci-dessous. Cela mettra à jour les métadonnées GF ADEx dans votre instance DHIS2. Ce processus prendra quelques minutes. Une fois le processus terminé, vous verrez un récapitulatif ci-dessous."
   },
   "update-metadata-btn": "Mettre à jour les métadonnées GF ADEx",
-  "json-upload-success": "Métadonnées GF ADEX téléchargées avec succès",
-  "json-upload-error": "Échec du téléchargement des métadonnées GF ADEX",
-  "json-invalid": "Le fichier JSON que vous avez téléchargé est invalide. Veuillez vérifier le fichier et réessayer.",
+  "json-upload-success": "Métadonnées GF ADEx téléversées avec succès",
+  "json-upload-error": "Échec du téléversement des métadonnées GF ADEx",
+  "json-invalid": "Le fichier JSON que vous avez téléversé est invalide. Veuillez vérifier le fichier et réessayer.",
   "upgrade-status-report": "Rapport d'état de la mise à niveau",
   "object-type": "Type d'objet",
   "created": "Créé",
@@ -40,9 +40,28 @@
   "status-code": "Code de statut",
   "loading": "Chargement... veuillez patienter.",
   "backup-config": {
-    "title": "Sauvegardez votre configuration locale",
-    "content": "Avant de continuer, veuillez sauvegarder votre configuration locale. Cela vous permettra de restaurer votre configuration locale en cas de problème lors du processus de mise à niveau ou si vous avez besoin de restaurer cette configuration sur un autre système. Cliquez sur le bouton \"Sauvegarder\" ci-dessous pour sauvegarder votre configuration locale.",
-    "backup-btn": "Sauvegarder",
-    "configured-only": "Sauvegarder uniquement les indicateurs configurés"
+    "title": "Sauvegardez vos indicateurs locaux",
+    "content": "Avant de continuer, veuillez sauvegarder vos indicateurs locaux. Cela vous permettra de restaurer vos indicateurs locaux en cas de problème lors du processus de mise à niveau. Cliquez sur le bouton \"Sauvegarder les indicateurs locaux\" ci-dessous pour continuer.",
+    "backup-btn": "Sauvegarder les indicateurs locaux"
+  },
+  "no-remote-metadata": "Aucune métadonnée de modèle GFADEx trouvée dans le datastore. Veuillez téléverser la métadonnée du modèle GFADEx dans le datastore et réessayer.",
+  "no-local-gfadex-indicators": "Aucun indicateur GFADEx trouvé dans l'instance DHIS2 locale. Veuillez importer la métadonnée du modèle GFADEx et réessayer.",
+  "upgrade-error": "Erreur lors de la mise à niveau des métadonnées GF existantes. Veuillez réessayer.",
+  "export-local-package": {
+    "title": "Exporter le package GFADEx local",
+    "content": "Si vous devez transférer vos indicateurs vers une autre instance DHIS2, cliquez sur le bouton \"Exporter le package local\" ci-dessous. Cela exportera les métadonnées locales GFADEx vers un fichier JSON que vous pourrez enregistrer sur votre ordinateur local. Vous pourrez ensuite utiliser ce fichier de métadonnées pour l'importer dans une autre instance DHIS2. Notez que seuls les indicateurs configurés dans l'instance DHIS2 locale seront inclus !",
+    "export-btn": "Exporter le package local"
+  },
+  "import-package": {
+    "title": "Importer le package GFADEx",
+    "content": "Une fois que vous avez téléversé le package ADEx dans le datastore DHIS2, vous pouvez importer le package dans votre instance DHIS2 locale. Cliquez sur le bouton \"Importer le package\" ci-dessous pour continuer. Cela importera les métadonnées GFADEx du datastore dans votre instance DHIS2 locale.",
+    "import-btn": "Importer le package",
+    "existing-package-warning": "Il semble que vous ayez déjà des métadonnées GFADex dans votre instance DHIS2 locale. L'importation du package écrasera vos métadonnées GFADex existantes. Veuillez utiliser le processus de mise à niveau à la place."
+  },
+  "validation-report": {
+    "title": "Rapport de validation",
+    "run-validation-btn": "Exécuter la validation",
+    "download-summary-btn": "Télécharger le résumé (CSV)",
+    "download-report-btn": "Télécharger le rapport (PDF)"
   }
 }

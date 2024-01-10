@@ -269,6 +269,18 @@ var validationResults = {
         "instruction": "GF ADEX exchanges should use \"UID\" as the target ID scheme.",
         "headers": [{ "title": "Exchange name" }, { "title": "Target ID scheme" }],
         issues: []
+    },
+    "EX_EXIST": {
+        "title": "At least one GF data exchange should exist.",
+        "instruction": "At least one aggregate data exchange with a target API URL containing \"globalfund\" should exist.",
+        "headers": [{ "title": "Exchange name" }],
+        issues: []
+    },
+    "INDS_EXIST": {
+        "title": "At least one GF indicator should exist.",
+        "instruction": "If you have not already imported a GF ADEX metadata package, you should do so now.",
+        "headers": [{ "title": "Indicator name" }],
+        issues: []
     }
 };
 
@@ -378,7 +390,6 @@ function findDuplicatesInRequests(exchanges, validationResults) {
 
 //Find unconfigured indicators in requests
 function findUnconfiguredInRequests(exchanges, indicatorsUnconf, validationResults) {
-    console.log("Unconfigured indicators", indicatorsUnconf);
     for (var ex of exchanges) {
         for (var req of ex.source.requests) {
             for (var ind of req.dx) {
@@ -399,7 +410,6 @@ function findUnconfiguredInRequests(exchanges, indicatorsUnconf, validationResul
 function findConfiguredNotInRequests(exchanges, indicatorsConf, validationResults) {
     for (var confInd in indicatorsConf) {
         var found = false;
-
         for (var ex of exchanges) {
             for (var req of ex.source.requests) {
                 if (req.dx.indexOf(confInd) !== -1) {
@@ -682,18 +692,40 @@ function validateRootOrgUnit(root_orgunit, exchanges, validationResults) {
 }
 
 function validateOrgUnitCode(root_orgunit, validationResults) {
+    
+
     const attributeValue = root_orgunit.attributeValues.find(
         (attributeValue) => attributeValue.attribute.id === "hpe7LiGDgvo"
     );
+    //These could be undefined
+    var ou_is_configured = iso3_codes.includes(root_orgunit?.code) || iso3_codes.includes(attributeValue?.value);
+    //If neither is defined, ou_is_configured is false
+    if (typeof ou_is_configured === "undefined") {
+        ou_is_configured = false;
+    }
 
-    const ou_is_configured = iso3_codes.includes(root_orgunit.code) || iso3_codes.includes(attributeValue.value);
+    var orgunitCode = "";
+    var attributeValueCode = "";
+    
+    if (typeof root_orgunit?.code === "undefined" ){
+        orgunitCode = "UNKNOWN";
+    } else {
+        orgunitCode = root_orgunit.code;
+    }
+
+    if (typeof attributeValue?.value === "undefined" ){
+        attributeValueCode = "UNKNOWN";
+    } else {
+        attributeValueCode = attributeValue.value;
+    }
 
     if (!ou_is_configured) {
-        validationResults["ORGUNIT_CODE"].issues.push([root_orgunit.name, root_orgunit.code, attributeValue.value]);
+        validationResults["ORGUNIT_CODE"].issues.push([root_orgunit.name, orgunitCode, attributeValueCode]);
     }
 }
 
 function validateExchangeTargetOuScheme(exchanges, validationResults) {
+
     for (var ex of exchanges) {
         const targetOuScheme = ex.target.request.orgUnitIdScheme ?? "UNKNOWN";
         if (targetOuScheme != "CODE") {
@@ -704,6 +736,7 @@ function validateExchangeTargetOuScheme(exchanges, validationResults) {
 
 
 function checkTargetOutputIdScheme(exchanges, validationResults) {
+
     for (var ex of exchanges) {
         if (ex.target.request.idScheme != "UID") {
             validationResults["EX_TARGET_ID_SCHEME"].issues.push([ex.name, ex.target.request.idScheme]);
@@ -761,11 +794,12 @@ function indicatorNumeratorExpressionDescription(id) {
 
 export function configToCSV() {
     var csv_data = [];
-    csv_data.push("\"Code\",\"Short Name\",\"Indicator name\",\"Period type\",\"Numerator\"");
+    csv_data.push("\"UID\",\"Code\",\"Short Name\",\"Indicator name\",\"Period type\",\"Numerator\"");
     for (var pType in indicatorpTypes) {
         for (var indicator in indicatorpTypes[pType]) {
             let csvrow = [];
             let indicatorId = indicatorpTypes[pType][indicator];
+            csvrow.push("\"" + indicatorId + "\"");
             csvrow.push("\"" + getIndicatorAttributeFromID(indicatorId, "code", indicators) + "\"");
             csvrow.push("\"" + getIndicatorAttributeFromID(indicatorId, "shortName", indicators) + "\"");
             csvrow.push("\"" + getIndicatorAttributeFromID(indicatorId, "name", indicators) + "\"");
@@ -861,7 +895,6 @@ export async function runValidation() {
             console.log(err);
             return false;
         });
-    console.log("Indicators are", indicators);
 
     updatedIndicators = replaceFormulasWithShortNames(indicators, operands, dataElements, dataSets);
 
@@ -870,30 +903,40 @@ export async function runValidation() {
     indicatorsConf = classifiedIndicators.indicatorsConf;
     indicatorsUnconf = classifiedIndicators.indicatorsUnconf;
 
-    findDuplicatesInRequests(exchanges, validationResults);
-    findUnconfiguredInRequests(exchanges, indicatorsUnconf, validationResults);
-    findConfiguredNotInRequests(exchanges, indicatorsConf, validationResults);
-    findNonAdexIndicatorsInRequests(exchanges, indicatorsUnconf, indicatorsConf, validationResults);
-    findChangedDenominators(indicators, validationResults);
-    findChangedDecimals(indicators, validationResults);
-    findInvalidImplementerTypes(indicators, validationResults);
-    findPublicAccess(exchanges, validationResults);
-    findUserGroupAccess(exchanges, validationResults);
-    findRequestPeriodInoncistenies(exchanges, indicators, indicatorpTypes, validationResults);
-    findNonRelativePeriods(exchanges, validationResults);
-    findWrongOutputIDScheme(exchanges, validationResults);
-    findTargetAPI(exchanges, validationResults);
-    findBasicAuth(exchanges, validationResults);
-    validateRootOrgUnit(root_orgunit, exchanges, validationResults);
+    //If we do not have any exchanges, then we cannot check these
+    if (exchanges.length > 0) {
+        findDuplicatesInRequests(exchanges, validationResults);
+        findUnconfiguredInRequests(exchanges, indicatorsUnconf, validationResults);
+        findConfiguredNotInRequests(exchanges, indicatorsConf, validationResults);
+        findNonAdexIndicatorsInRequests(exchanges, indicatorsUnconf, indicatorsConf, validationResults);
+        findPublicAccess(exchanges, validationResults);
+        findUserGroupAccess(exchanges, validationResults);
+        findRequestPeriodInoncistenies(exchanges, indicators, indicatorpTypes, validationResults);
+        findNonRelativePeriods(exchanges, validationResults);
+        findWrongOutputIDScheme(exchanges, validationResults);
+        findTargetAPI(exchanges, validationResults);
+        findBasicAuth(exchanges, validationResults);
+        validateRootOrgUnit(root_orgunit, exchanges, validationResults);
+        validateExchangeTargetOuScheme(exchanges, validationResults);
+        checkTargetOutputIdScheme(exchanges, validationResults); } else {
+        validationResults["EX_EXIST"].issues.push(["No exchanges found"]);
+    }
+
+    if (indicators.length > 0) {
+        findChangedDenominators(indicators, validationResults);
+        findChangedDecimals(indicators, validationResults);
+        findInvalidImplementerTypes(indicators, validationResults);
+    } else {
+        validationResults["INDS_EXIST"].issues.push(["No GF ADEX indicators found"]);
+    }
+
     validateOrgUnitCode(root_orgunit, validationResults);
-    validateExchangeTargetOuScheme(exchanges, validationResults);
-    checkTargetOutputIdScheme(exchanges, validationResults);
+
     $("#loading").hide();
     $("#download-summary-csv").prop("disabled", false);
     $("#download-report-pdf").prop("disabled", false);
     printValidationResults(validationResults);
 
-    console.log("Validation results", validationResults);
 }
 
 export class ValidationReport extends HTMLElement {
@@ -907,19 +950,19 @@ export class ValidationReport extends HTMLElement {
                     <button id="run-validation" onclick="runValidation()" data-i18n="validation-report.run-validation-btn"></button>
                 </td>
                 <td>
-                    <button id="download-summary-csv" type="button" onclick="configToCSV()" disabled="disabled">
+                    <button id="download-summary-csv" type="button" onclick="configToCSV()" disabled="disabled" data-i18n="validation-report.download-summary-btn">
                         Download Exchange Summary
                     </button>
                 </td>
                 <td>
-                    <button id="download-report-pdf" type="button" onclick="reportToPDF()" disabled="disabled">
+                    <button id="download-report-pdf" type="button" onclick="reportToPDF()" disabled="disabled" data-i18n="validation-report.download-report-btn">
                         Download Report (PDF)
                     </button>
                 </td>
             </tr>
            </table>
            <div id="loading" style="display:none" >
-           <h1>Please wait while loading...</h1>
+           <h1 data-i18n="loading">Loading...please wait.</h1>
            <img alt=""
                src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPgo8c3ZnIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjEuNDE0MjE7IiB4PSIwcHgiIHk9IjBweCI+CiAgICA8ZGVmcz4KICAgICAgICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWwogICAgICAgICAgICBALXdlYmtpdC1rZXlmcmFtZXMgc3BpbiB7CiAgICAgICAgICAgICAgZnJvbSB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIC13ZWJraXQtdHJhbnNmb3JtOiByb3RhdGUoLTM1OWRlZykKICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgICAgQGtleWZyYW1lcyBzcGluIHsKICAgICAgICAgICAgICBmcm9tIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKDBkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHRvIHsKICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogcm90YXRlKC0zNTlkZWcpCiAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgICAgIHN2ZyB7CiAgICAgICAgICAgICAgICAtd2Via2l0LXRyYW5zZm9ybS1vcmlnaW46IDUwJSA1MCU7CiAgICAgICAgICAgICAgICAtd2Via2l0LWFuaW1hdGlvbjogc3BpbiAxLjVzIGxpbmVhciBpbmZpbml0ZTsKICAgICAgICAgICAgICAgIC13ZWJraXQtYmFja2ZhY2UtdmlzaWJpbGl0eTogaGlkZGVuOwogICAgICAgICAgICAgICAgYW5pbWF0aW9uOiBzcGluIDEuNXMgbGluZWFyIGluZmluaXRlOwogICAgICAgICAgICB9CiAgICAgICAgXV0+PC9zdHlsZT4KICAgIDwvZGVmcz4KICAgIDxnIGlkPSJvdXRlciI+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwwQzIyLjIwNTgsMCAyMy45OTM5LDEuNzg4MTMgMjMuOTkzOSwzLjk5MzlDMjMuOTkzOSw2LjE5OTY4IDIyLjIwNTgsNy45ODc4MSAyMCw3Ljk4NzgxQzE3Ljc5NDIsNy45ODc4MSAxNi4wMDYxLDYuMTk5NjggMTYuMDA2MSwzLjk5MzlDMTYuMDA2MSwxLjc4ODEzIDE3Ljc5NDIsMCAyMCwwWiIgc3R5bGU9ImZpbGw6YmxhY2s7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNNS44NTc4Niw1Ljg1Nzg2QzcuNDE3NTgsNC4yOTgxNSA5Ljk0NjM4LDQuMjk4MTUgMTEuNTA2MSw1Ljg1Nzg2QzEzLjA2NTgsNy40MTc1OCAxMy4wNjU4LDkuOTQ2MzggMTEuNTA2MSwxMS41MDYxQzkuOTQ2MzgsMTMuMDY1OCA3LjQxNzU4LDEzLjA2NTggNS44NTc4NiwxMS41MDYxQzQuMjk4MTUsOS45NDYzOCA0LjI5ODE1LDcuNDE3NTggNS44NTc4Niw1Ljg1Nzg2WiIgc3R5bGU9ImZpbGw6cmdiKDIxMCwyMTAsMjEwKTsiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGc+CiAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMCwzMi4wMTIyQzIyLjIwNTgsMzIuMDEyMiAyMy45OTM5LDMzLjgwMDMgMjMuOTkzOSwzNi4wMDYxQzIzLjk5MzksMzguMjExOSAyMi4yMDU4LDQwIDIwLDQwQzE3Ljc5NDIsNDAgMTYuMDA2MSwzOC4yMTE5IDE2LjAwNjEsMzYuMDA2MUMxNi4wMDYxLDMzLjgwMDMgMTcuNzk0MiwzMi4wMTIyIDIwLDMyLjAxMjJaIiBzdHlsZT0iZmlsbDpyZ2IoMTMwLDEzMCwxMzApOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksMjguNDkzOUMzMC4wNTM2LDI2LjkzNDIgMzIuNTgyNCwyNi45MzQyIDM0LjE0MjEsMjguNDkzOUMzNS43MDE5LDMwLjA1MzYgMzUuNzAxOSwzMi41ODI0IDM0LjE0MjEsMzQuMTQyMUMzMi41ODI0LDM1LjcwMTkgMzAuMDUzNiwzNS43MDE5IDI4LjQ5MzksMzQuMTQyMUMyNi45MzQyLDMyLjU4MjQgMjYuOTM0MiwzMC4wNTM2IDI4LjQ5MzksMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxMDEsMTAxLDEwMSk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMy45OTM5LDE2LjAwNjFDNi4xOTk2OCwxNi4wMDYxIDcuOTg3ODEsMTcuNzk0MiA3Ljk4NzgxLDIwQzcuOTg3ODEsMjIuMjA1OCA2LjE5OTY4LDIzLjk5MzkgMy45OTM5LDIzLjk5MzlDMS43ODgxMywyMy45OTM5IDAsMjIuMjA1OCAwLDIwQzAsMTcuNzk0MiAxLjc4ODEzLDE2LjAwNjEgMy45OTM5LDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoMTg3LDE4NywxODcpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTUuODU3ODYsMjguNDkzOUM3LjQxNzU4LDI2LjkzNDIgOS45NDYzOCwyNi45MzQyIDExLjUwNjEsMjguNDkzOUMxMy4wNjU4LDMwLjA1MzYgMTMuMDY1OCwzMi41ODI0IDExLjUwNjEsMzQuMTQyMUM5Ljk0NjM4LDM1LjcwMTkgNy40MTc1OCwzNS43MDE5IDUuODU3ODYsMzQuMTQyMUM0LjI5ODE1LDMyLjU4MjQgNC4yOTgxNSwzMC4wNTM2IDUuODU3ODYsMjguNDkzOVoiIHN0eWxlPSJmaWxsOnJnYigxNjQsMTY0LDE2NCk7Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnPgogICAgICAgICAgICA8cGF0aCBkPSJNMzYuMDA2MSwxNi4wMDYxQzM4LjIxMTksMTYuMDA2MSA0MCwxNy43OTQyIDQwLDIwQzQwLDIyLjIwNTggMzguMjExOSwyMy45OTM5IDM2LjAwNjEsMjMuOTkzOUMzMy44MDAzLDIzLjk5MzkgMzIuMDEyMiwyMi4yMDU4IDMyLjAxMjIsMjBDMzIuMDEyMiwxNy43OTQyIDMzLjgwMDMsMTYuMDA2MSAzNi4wMDYxLDE2LjAwNjFaIiBzdHlsZT0iZmlsbDpyZ2IoNzQsNzQsNzQpOyIvPgogICAgICAgIDwvZz4KICAgICAgICA8Zz4KICAgICAgICAgICAgPHBhdGggZD0iTTI4LjQ5MzksNS44NTc4NkMzMC4wNTM2LDQuMjk4MTUgMzIuNTgyNCw0LjI5ODE1IDM0LjE0MjEsNS44NTc4NkMzNS43MDE5LDcuNDE3NTggMzUuNzAxOSw5Ljk0NjM4IDM0LjE0MjEsMTEuNTA2MUMzMi41ODI0LDEzLjA2NTggMzAuMDUzNiwxMy4wNjU4IDI4LjQ5MzksMTEuNTA2MUMyNi45MzQyLDkuOTQ2MzggMjYuOTM0Miw3LjQxNzU4IDI4LjQ5MzksNS44NTc4NloiIHN0eWxlPSJmaWxsOnJnYig1MCw1MCw1MCk7Ii8+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K" />
            </div>

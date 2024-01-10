@@ -1,6 +1,6 @@
 {
-  "name": "gfadex_metadata_manager",
-  "description": "GF ADEx Metadata Manager",
+  "name": "gf-adex-flow-app",
+  "description": "ADEx Flow",
   "version": "0.1.0",
   "dependencies": {
     "@andreasremdt/simple-translator": "^2.0.4",
@@ -17,7 +17,7 @@
     "css-loader": "^6.8.1",
     "d2-manifest": "^1.0.0",
     "datatables.net": "^1.13.8",
-    "eslint": "^4.11.0",
+    "eslint": "^8.56.0",
     "file-loader": "^6.2.0",
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
@@ -53,7 +53,7 @@
       "48": "img/icons/app_logo_48x48.png",
       "96": "img/icons/app_logo_96x96.png"
     },
-    "name": "GF ADEx Metadata Manager",
+    "name": "ADEx Flow",
     "version": "0.1.0",
     "appType": "APP"
   }

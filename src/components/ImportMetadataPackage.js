@@ -19,30 +19,33 @@ async function checkExistingPackage() {
         return false;
     }
 }
+
 /* global translator, __ */
 export function importMetadataPackage() {
-    const packageExists = checkExistingPackage();
-    if (!packageExists) {
+    checkExistingPackage().then((packageExists) => {
+        console.log("Package exists?", packageExists);
+        if (!packageExists) {
         //Get the indicators from the datastore
-        const payload = fetchIndicatorsFromDataStore();
-        const indicatorsToDeleteList = [];
-        //Post this to the API
-        fetch(baseUrl + "metadata", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                renderUpgradeStatusReport(data, indicatorsToDeleteList);
-            })
-            .catch((error) => {
-                console.error("Error while importing GF ADEX indicators.", error);
-                alert(__("upgrade-error"));
+            fetchIndicatorsFromDataStore().then((payload) => {
+                const indicatorsToDeleteList = [];
+                //Post this to the API
+                fetch(baseUrl + "metadata", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        renderUpgradeStatusReport(data, indicatorsToDeleteList);
+                    })
+                    .catch((error) => {
+                        console.error("Error while importing GF ADEX indicators.", error);
+                        alert(__("upgrade-error"));
+                    });
             });
-    }
+        }});
 
 }
 
@@ -52,7 +55,7 @@ export class ImportMetadataPackage extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `<h2 data-i18n="import-package.title"></h2>
     <p data-i18n="import-package.content"></p>
-    <button id="import-package" onclick="importMetadataPackage()" data-i18n="import-package.import-btn"></button>
-    <div id="upgradeStatus"></div>`;
+    <button id="update-gf-metadata-btn" onclick="importMetadataPackage()" data-i18n="import-package.import-btn"></button>
+    <upgrade-status></upgrade-status>`;
     }
 }
