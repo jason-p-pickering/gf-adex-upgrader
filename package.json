@@ -1,7 +1,7 @@
 {
   "name": "gf-adex-flow-app",
   "description": "ADEx Flow",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "dependencies": {
     "@andreasremdt/simple-translator": "^2.0.4",
     "datatables.net-dt": "^1.13.8",
