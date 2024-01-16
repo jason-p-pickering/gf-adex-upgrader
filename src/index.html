@@ -6,20 +6,12 @@
 </head>
 <body>
     <header-bar></header-bar>
-    <div style="display: flex; position: fixed; background: rgb(228, 228, 228); width: 100%; z-index: 10; top: 50px; flex: 1 1 0%; height: auto;">
-        <button class="tab" onclick="showIntroduction()">Introduction</button>
-        <button class="tab" onclick="showBackupWorkflow()">Backup</button>
-        <button class="tab" onclick="showGettingStarted()">Import</button>
-        <button class="tab" onclick="showValidationReport()" >Validate</button>
-        <button class="tab" onclick="showUpdateIndicatorsWorkflow()">Update</button>
-        <button class="tab" onclick="showExportLocalPackageWorkflow()">Export</button>
-    </div>
+    <navigation-strip></navigation-strip>
     <div class="mainView" >
-    <div id="appContent" style="position: fixed;top: 66px;overflow: visible; overflow-y: auto; height: 95%;">
+        <div id="appContent" style="position: fixed;top: 80px;overflow: visible; overflow-y: auto; height: 95%;">
         <!--Start with the intro page.-->
-        <intro-page></intro-page>
+            <intro-page></intro-page>
+        </div>
     </div>
-    </div>
-  </body>
 </body>
 </html>

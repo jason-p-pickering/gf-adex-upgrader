@@ -1,4 +1,4 @@
-import {BackupWorkflow} from "../components/BackupWorkflow.js";
+import {BackupWorkflow} from "../components/ExportLocal.js";
 import {UpgradeStatus} from "../components/UpgradeStatus.js";
 
 window.customElements.define("backup-workflow", BackupWorkflow);

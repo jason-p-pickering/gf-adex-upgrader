@@ -1,19 +1,19 @@
 {
   "header": {
-    "title": "GF ADEX Pakethanterare",
+    "title": "GF ADEx Flux app",
     "exit" : "Avsluta"
   },
   "introduction": {
     "title": "Introduktion",
-    "content": "Denna app hjälper dig att uppdatera till den senaste versionen av GF ADEx-metadatapaketet. Följ stegen nedan för att uppgradera paketet. All GF ADEX-relaterad metadata, såsom indikatorer och indikatorgrupper, kommer att uppdateras. Eventuella ändringar som du har gjort i täljaredefinitionerna kommer att bevaras."
+    "content": "Denna app hjälper dig att hantera din Global Fund ADEx-metadata. Global Fund kan periodvis släppa nya versioner av ADEx-metadata. Denna app hjälper dig att uppgradera din befintliga GFADex-metadata till den senaste versionen. Denna app påverkar inte någon av dina befintliga data eller metadata förutom GFADEx-metadata. Denna app låter dig också exportera din lokala GFADEx-metadata till en JSON-fil som du sedan kan importera till en annan DHIS2-instans."
   },
   "download-package": {
-    "title": "Ladda ner det senaste paketet",
-    "content": "Gå till GitHub och ladda ner <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">den senaste versionen</a> av GF ADEx-metadatapaketet. Spara detta på din lokala dator."
+    "title": "Ladda ner den senaste paketet",
+    "content": "Gå till GitHub och ladda ner <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">den senaste versionen</a> av GF ADEx-metadatapaketet. Spara filen på din lokala dator."
   },
   "upload-to-datastore": {
     "title": "Ladda upp en kopia av GF ADEX-metadata till DHIS2-datastoren.",
-    "content": "Använd filen som du laddade ner från föregående steg, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta kommer att spara en kopia av GF ADEx-metadata i den lokala datastoren."
+    "content": "Använd filen som du laddade ner från föregående steg, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta sparar en kopia av GF ADEx-metadata i den lokala datastoren."
   },
   "upload-btn": {
     "choose": "Välj fil",
@@ -22,10 +22,10 @@
   },
   "update-local" : {
     "title": "Uppdatera GFADex-metadata",
-    "content": "När du har slutfört de tidigare stegen, klicka på knappen \"Uppdatera GF ADEx Metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Denna process påverkar inte några av dina befintliga data eller metadata förutom GFADEx-metadata. Denna process tar några minuter att slutföra. När processen är klar kommer du att se en sammanfattning av importprocessen nedan."
+    "content": "När du har slutfört de tidigare stegen, klicka på knappen \"Uppdatera GF ADEx-metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Denna process tar några minuter att slutföra. När processen är klar kommer du att se en sammanfattning nedan."
   },
-  "update-metadata-btn": "Uppdatera GF ADEx Metadata",
-  "json-upload-success" : "GF ADEX-metadata uppladdat framgångsrikt",
+  "update-metadata-btn": "Uppdatera GF ADEx-metadata",
+  "json-upload-success" : "GF ADEX-metadata uppladdad framgångsrikt",
   "json-upload-error" : "Misslyckades att ladda upp GF ADEX-metadata",
   "json-invalid": "Den JSON-fil du laddade upp är ogiltig. Kontrollera filen och försök igen.",
   "upgrade-status-report": "Uppgraderingsstatusrapport",
@@ -40,9 +40,28 @@
   "status-code" : "Statuskod",
   "loading" : "Laddar... var god vänta.",
   "backup-config":    {
-    "title": "Säkerhetskopiera din lokala konfiguration",
-    "content": "Innan du fortsätter, var god säkerhetskopiera din lokala konfiguration. Detta gör att du kan återställa din lokala konfiguration om något går fel under uppgraderingsprocessen eller om du behöver återställa denna konfiguration på en annan system. Klicka på knappen \"Säkerhetskopiera\" nedan för att säkerhetskopiera din lokala konfiguration.",
-    "backup-btn": "Säkerhetskopiera",
-    "configured-only" : "Säkerhetskopiera endast konfigurerade indikatorer"
+    "title": "Säkerhetskopiera dina lokala indikatorer",
+    "content": "Innan du fortsätter, vänligen säkerhetskopiera dina lokala indikatorer. Detta gör att du kan återställa dina lokala indikatorer om något går fel under uppgraderingsprocessen. Klicka på knappen \"Säkerhetskopiera lokala indikatorer\" nedan för att fortsätta.",
+    "backup-btn": "Säkerhetskopiera lokala indikatorer"
+  },
+  "no-remote-metadata" : "Ingen GFADEx-mallmetadata hittades i datastoren. Ladda upp GFADEx-mallmetadata till datastoren och försök igen.",
+  "no-local-gfadex-indicators": "Inga GFADEx-indikatorer hittades i den lokala DHIS2-instansen. Importera GFADEx-mallmetadata och försök igen.",
+  "upgrade-error": "Fel vid uppgradering av befintlig GF-metadata. Försök igen.",
+  "export-local-package" : {
+    "title": "Exportera lokal GFADEx-paket",
+    "content": "Om du behöver överföra dina indikatorer till en annan DHIS2-instans, klicka på knappen \"Exportera lokalt paket\" nedan. Detta exporterar den lokala GFADEx-metadata till en JSON-fil som du kan spara på din lokala dator. Du kan sedan använda denna metadatafil för att importera till en annan DHIS2-instans. Observera att endast indikatorer som har konfigurerats i den lokala DHIS2-instansen kommer att inkluderas!",
+    "export-btn": "Exportera lokalt paket"
+  },
+  "import-package" : {
+    "title": "Importera GFADEx-paket",
+    "content": "När du har laddat upp ADEx-paketet till DHIS2-datastoren kan du importera paketet till din lokala DHIS2-instans. Klicka på knappen \"Importera paket\" nedan för att fortsätta. Detta importerar GFADEx-metadata från datastoren till din lokala DHIS2-instans.",
+    "import-btn": "Importera paket",
+    "existing-package-warning": "Det verkar som att du redan har GFADex-metadata i din lokala DHIS2-instans. Att importera paketet kommer att skriva över din befintliga GFADex-metadata. Använd uppgraderingsprocessen istället."
+  },
+  "validation-report" : {
+    "title": "Valideringsrapport",
+    "run-validation-btn": "Kör validering",
+    "download-summary-btn": "Ladda ner sammanfattning (CSV)",
+    "download-report-btn": "Ladda ner rapport (PDF)"
   }
 }

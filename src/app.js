@@ -22,16 +22,17 @@ import { fetchIndicatorsFromDataStore } from "./js/utils.js";
 import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
 import { exportLocalIndicators } from "./js/utils.js";
-import { exportLocalPackage } from "./js/utils.js";
+import { exportLocalConfig } from "./js/utils.js";
 import { CurrentDate } from "./components/CurrentDate.js";
 import { HeaderBar } from "./components/HeaderBar.js";
-import  { showIntroduction } from "./views/showIntroduction.js";
+import { NavigationStrip } from "./components/NavigationStrip.js";
+import { showIntroduction } from "./views/showIntroduction.js";
 import { showBackupWorkflow } from "./views/showBackupWorkflow.js";
 import { showDownloadReferencePackage } from "./views/showDownloadReferencePackage.js";
 import { showUploadToDataStore } from "./views/showUploadToDataStore.js";
 import { showUpdateIndicatorsWorkflow } from "./views/showUpdateIndicatorsWorkflow.js";
-import { showExportLocalPackageWorkflow } from "./views/showExportLocalPackageWorkflow.js";
-import { showGettingStarted } from "./views/showGettingStarted.js";
+import { showExportLocalConfigWorkflow } from "./views/showExportLocalConfigWorkflow.js";
+import { showImportMetadataPackage } from "./views/showImportMetadataPackage.js";
 import { importMetadataPackage } from "./components/ImportMetadataPackage.js";
 import { showValidationReport } from "./views/showValidationReport.js";
 import { runValidation, reportToPDF, configToCSV } from "./components/ValidationReport.js";
@@ -55,6 +56,7 @@ var translator = new Translator({
 //Register the custom elements
 window.customElements.define("current-date", CurrentDate);
 window.customElements.define("header-bar", HeaderBar);
+window.customElements.define("navigation-strip", NavigationStrip);
 
 window.baseUrl = baseUrl;
 window.uploadReferenceJson = uploadReferenceJson;
@@ -64,14 +66,14 @@ window.fetchUserLocale = fetchUserLocale;
 window.translator = translator;
 window.userLocale = userLocale;
 window.exportLocalIndicators = exportLocalIndicators;
-window.exportLocalPackage = exportLocalPackage;
+window.exportLocalConfig = exportLocalConfig;
 window.showIntroduction = showIntroduction;
 window.showBackupWorkflow = showBackupWorkflow;
 window.showDownloadReferencePackage = showDownloadReferencePackage;
 window.showUploadToDataStore = showUploadToDataStore;
 window.showUpdateIndicatorsWorkflow = showUpdateIndicatorsWorkflow;
-window.showExportLocalPackageWorkflow = showExportLocalPackageWorkflow;
-window.showGettingStarted = showGettingStarted;
+window.showExportConfigWorkflow = showExportLocalConfigWorkflow;
+window.showImportMetadataPackage = showImportMetadataPackage;
 window.importMetadataPackage = importMetadataPackage;
 window.showValidationReport = showValidationReport;
 window.runValidation = runValidation;
@@ -84,9 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const defaultLanguage = "en";
         //If the user locale is not in the tranlsation list, use the default language
         if (!availableLanguages.includes(locale)) {
-            locale = defaultLanguage;
+            console.log("User locale", locale," not found in translation list. Using default language: " + defaultLanguage);
+            userLocale = defaultLanguage;
+        } else {
+            userLocale = locale;
         }
-        userLocale = locale;
+
         translator.fetch(availableLanguages, true).then(() => {
         // -> Translations are ready...
             translator.translatePageTo(userLocale);

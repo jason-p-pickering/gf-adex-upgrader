@@ -10,16 +10,17 @@ customElements.define("header-bar-logo", HeaderBarLogo);
 export class HeaderBar extends HTMLElement {
 
     connectedCallback() {
-        this.innerHTML = `<div class="headerBar">
-        <a href="../../..">
-        <div class="headerBarLogoBoxContainer">
-            <div class="headerBarLogoBox">
-              <header-bar-logo></header-bar-logo>
-            </div>
-        </div>
-        </a>
-        <p class="headerBarTitle" data-i18n="header.title">GF ADEx Flow App</p>
-        <button class="headerBarExit" onclick="location.href='../../..';" data-i18n="header.exit">Exit</button>
-    </div>`;
+        this.innerHTML = `
+        <div class="headerBar">
+            <a href="../../..">
+                <div class="headerBarLogoBoxContainer">
+                    <div class="headerBarLogoBox">
+                        <header-bar-logo></header-bar-logo>
+                    </div>
+                </div>
+            </a>
+            <p class="headerBarTitle" data-i18n="header.title">GF ADEx Flow App</p>
+            <button class="headerBarExit" onclick="location.href='../../..';" data-i18n="header.exit">Exit</button>
+        </div>`;
     }
 }

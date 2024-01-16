@@ -67,6 +67,7 @@ export function fetchIndicatorsFromDataStore() {
     });
 }
 
+
 export async function upgradeExistingIndicators(remote, local) {
     let remoteIndicators = remote.indicators;
 
@@ -375,6 +376,7 @@ async function createLocalPackage(includeConfiguredOnly = false) {
         alert(__("no-local-gfadex-indicators"));
         return;
     }
+
     if (includeConfiguredOnly) {
         localIndicators = localIndicators.filter((indicator) => indicator.numerator.trim() != "0");
     }
@@ -408,20 +410,24 @@ export async function exportLocalIndicators() {
     exportJsonData(localConfig);
 }
 
-export async function exportLocalPackage() {
-    const localConfig = await createLocalPackage();
+export async function exportLocalConfig() {
+    //Get the value of the checkbox
+    const onlyConfiguredIndicators = document.querySelector("#only-configured-indicators").checked;
+    const localConfig = await createLocalPackage(onlyConfiguredIndicators);
     exportJsonData(localConfig);
 }
 
 async function exportJsonData(json_data) {
-    showLoading();
+
     //There might not be anything in the backup, if so skip the download
     if (json_data) {
+        showLoading();
         let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json_data));
         let dlAnchorElem = document.createElement("a");
         dlAnchorElem.setAttribute("href", dataStr);
         dlAnchorElem.setAttribute("download", "data.json");
         dlAnchorElem.click();
+        resetUpgradeStatus();
     }
-    resetUpgradeStatus();
+    
 }

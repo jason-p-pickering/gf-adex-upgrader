@@ -1,30 +1,34 @@
 {
   "header": {
-    "title": "GF ADEx Flow App",
+    "title": "GFADEx Flow App",
     "exit" : "Exit"
   },
   "introduction": {
     "title": "Introduction",
-    "content": "This app will help manage your Global Fund ADEx Metadata. The Global Fund may periodically release new versions of the ADEx metadata. This app will help you upgrade your existing GFADex metadata to the latest version. This app will not affect any of your existing data or metadata other than the GFADEx metadata. This app will also allow you to export your local GFADEx metadata to a JSON file which you can then import into another DHIS2 instance."
+    "content": "This app will help manage Global Fund ADEx Metadata. The Global Fund may periodically release new versions of the ADEx metadata package. ADEx administrators can use this app to facilitate upgrading existing GFADex metadata packages to the latest version. Using this app will not affect any existing data or metadata, as it is designed to only work with GFADEx metadata. This app can also be used to export locally configured GFADEx exchange indicators and data exchange configuration to a JSON file which you can then import into another DHIS2 instance."
   },
   "download-package": {
-    "title": "Download the latest package",
-    "content": "Head over to GitHub and download <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">the latest version</a> of the GF ADEx metadata package. Save this file to your local computer."},
+    "title": "Download the latest GFADEx metadata package",
+    "content": "Go to GitHub via this link <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\"> and download the latest version</a> of the GFADEx metadata package. Save this file to a local computer."},
   "upload-to-datastore": {
-    "title": "Upload a copy of the GF ADEX metadata to the DHIS2 datastore.",
-    "content": "Using the file which you downloaded from the previous step, choose the file to upload it and then click \"Upload GFADEx template\". This will save a copy of the GF ADEx metadata in the local datastore."},
+    "title": "Upload the GFADEx reference metadata to the DHIS2 datastore.",
+    "content": "Select the file downloaded from the previous step to upload and click \"Upload GFADEx package\". This will store a copy of the GFADEx reference metadata package in the local datastore.  This step is required for a new server GFADEx setup."},
     "upload-btn": {
       "choose": "Choose file",
       "no-file-chosen": "No file chosen",
-      "upload": "Upload GFADEx template"
+      "upload": "Upload GFADEx package"
+    },
+    "import-local" : {
+      "title": "Import GFADEx metadata",
+      "content": "Once the previous steps are completed, click the \"Import GFADEx Metadata\" button below. This will import the GFADEx metadata into the DHIS2 instance. This process may take a few minutes to complete. Once the process completes, a summary will display below."
     },
     "update-local" : {
-      "title": "Update GFADex metadata",
-      "content": "Once you have completed the previous steps, click the \"Update GF ADEx Metadata\" button below. This will update the GF ADEx metadata in your DHIS2 instance. This process will take a few minutes to complete. Once the process completes, you will see a summary below."
+      "title": "Update GFADEx metadata",
+      "content": "Once the previous steps are completed, click the \"Update GFADEx Metadata\" button below. During this process, your local GFADEx indicators will be upgraded. Your existing numerator definitions will be preserved. This process may take a few minutes to complete. Once the process completes, a summary will display below."
     },
-    "update-metadata-btn": "Update GF ADEx Metadata",
-    "json-upload-success" : "GF ADEX metadata uploaded successfully",
-    "json-upload-error" : "GF ADEX metadata upload failed",
+    "update-metadata-btn": "Update GFADEx Metadata",
+    "json-upload-success" : "GFADEX metadata uploaded successfully",
+    "json-upload-error" : "GFADEX metadata upload failed",
     "json-invalid": "The JSON file you uploaded is invalid. Please check the file and try again.",
     "upgrade-status-report": "Upgrade Status Report",
     "object-type": "Object Type",
@@ -38,26 +42,27 @@
     "status-code" : "Status Code",
     "loading" : "Loading...please wait.",
     "backup-config":    {
-      "title": "Backup your local indicators",
-      "content": "Before you proceed, please backup your local local indicators. This will allow you to restore your local indicators in case something goes wrong during the upgrade process. Click the \"Backup local indicators\" button below to proceed.",
-      "backup-btn": "Backup local indicators"
+      "title": "Backup GFADEx configuration",
+      "content": "Before proceeding, please backup the current GFADEx configuration. This will ensure a copy exists in the event something goes wrong during the update process. Click the \"Backup GFADEx configuration\" button below to proceed.",
+      "backup-btn": "Backup GFADEx configuration"
     },
-    "no-remote-metadata" : "No GFADEx template metadata found in the datastore. Please upload the GFADEx template metadata to the datastore and try again",
-    "no-local-gfadex-indicators": "No GFADEx indicators found in the local DHIS2 instance. Please import the GFADEx template metadata and try again.",
-    "upgrade-error": "Error upgrading existing GF metadata. Please try again.",
-    "export-local-package" : {
-      "title": "Export local GFADEx package",
-      "content": "If you need to transfer your indicators to another DHIS2 instance, click the \"Export local package\" button below. This will export the local GFADEx metadata to a JSON file which you can save to your local computer. You can then use this metadata file to import into another DHIS2 instance. Note that only indicators which have been configured in the local DHIS2 instance will be included!",
-      "export-btn": "Export local package"
+    "no-remote-metadata" : "No GFADEx reference metadata package found in the datastore. Please upload the GFADEx reference metadata package to the datastore and try again",
+    "no-local-gfadex-indicators": "No GFADEx configuration found. Go back to start by importing the GFADEx reference metadata.",
+    "upgrade-error": "Error upgrading existing GFADEx metadata. Please try again.",
+    "export-local-config": {
+      "title": "Export GFADEx configuration",
+      "content": "When it is time to move the GFADEx configuration to another DHIS2 instance, click the \"Export GFADEx configuration\" button below. This will export only the configured GFADEx metadata, as well as the data exchange requests, to a JSON file which can be saved locally.  This JSON file is imported into the destination DHIS2 instance. Note that only GFADEx indicators which have been configured in the local DHIS2 instance will be included!",
+      "export-btn": "Export GFADEx configuration",
+      "configured-only": "Include only configured GFADEx indicators"
     },
-    "import-package" : {
-      "title": "Import GFADEx package",
-      "content": "Once you have uploaded the ADEx package to the DHIS2 datastore, you can import the package into your local DHIS2 instance. Click the \"Import package\" button below to proceed. This will import the GFADEx metadata from the datastore into your local DHIS2 instance.",
+    "import-package": {
+      "title": "Import GFADEx metadata package",
+      "content": "Once the GFADEx reference metadata has been uploaded into the DHIS2 datastore, the GFADEx metadata package can be imported into the destination DHIS2 instance. Click the \"Import package\" button below to proceed. This will import the GFADEx reference metadata from the DHIS2 datastore into the destination DHIS2 instance.",
       "import-btn": "Import package",
-      "existing-package-warning": "It looks like you already have GFADex metadata in your local DHIS2 instance. Importing the package will overwrite your existing GFADex metadata. Please use the upgrade process instead."
+      "existing-package-warning": "A GFADEx metadata package already exisits. Importing the package will overwrite your existing GFADEx metadata. Please use the 'Upgrade' process instead."
     },
     "validation-report" : {
-      "title": "Validation Report",
+      "title": "GFADEx Validation Report",
       "run-validation-btn": "Run Validation",
       "download-summary-btn": "Download Summary (CSV)",
       "download-report-btn": "Download Report (PDF)"

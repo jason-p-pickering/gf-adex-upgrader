@@ -45,7 +45,7 @@ body {
 	margin-left: auto;
 	box-sizing: border-box;
 	margin-right: 8px;
-	padding : 5px 15px;
+	padding: 5px 15px;
 	float: right;
 }
 
@@ -61,11 +61,11 @@ body {
 	border: 1px solid #cdcdcd;
 	border-radius: 3px;
 	padding: 8px 12px;
-	height: 39px!important;
-	width:calc(100% - 26px);
-  }
+	height: 39px !important;
+	width: calc(100% - 26px);
+}
 
-  .upload-btn-wrapper .btnr {
+.upload-btn-wrapper .btnr {
 	border: 1px solid gray;
 	color: gray;
 	background-color: #eee;
@@ -74,17 +74,59 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	position: relative;
-  }
+}
 
-  .upload-btn-wrapper .btnr + span {
+.upload-btn-wrapper .btnr+span {
 	padding: 5px;
 	font-weight: normal;
-	}
+}
 
-  .upload-btn-wrapper input[type=file] {
-	  font-size: 42px;
-	  position: absolute;
-	  left: 0;
-	  top: 0;
-	  opacity: 0;
-  }
+.upload-btn-wrapper input[type=file] {
+	font-size: 42px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	opacity: 0;
+}
+
+.tab {
+	text-decoration: none;
+	color: var(--black);
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	cursor: pointer;
+	line-height: 1.4;
+	font-size: medium;
+}
+
+.tab.active {
+    color: var(--black);
+    border: 2px solid;
+}
+
+
+.btn {
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+	margin: 10px;
+	padding: 10px 30px;
+	text-decoration: none;
+	max-width: 120px;
+	text-align: center;
+	display: inline-block;
+	transition: background-color 220ms, transform 220ms;
+	border: none;
+}
+
+ul {
+    list-style-type: none;
+	padding-inline: 10px; /* Remove the default list style */
+}
+
+ul li {
+    margin-bottom: 10px; /* Add some space between each list item */
+}
