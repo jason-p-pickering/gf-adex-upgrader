@@ -1,32 +1,36 @@
 {
   "header": {
-    "title": "GF ADEx Flux app",
+    "title": "ADEx Flödesapp",
     "exit" : "Avsluta"
   },
   "introduction": {
     "title": "Introduktion",
-    "content": "Denna app hjälper dig att hantera din Global Fund ADEx-metadata. Global Fund kan periodvis släppa nya versioner av ADEx-metadata. Denna app hjälper dig att uppgradera din befintliga GFADex-metadata till den senaste versionen. Denna app påverkar inte någon av dina befintliga data eller metadata förutom GFADEx-metadata. Denna app låter dig också exportera din lokala GFADEx-metadata till en JSON-fil som du sedan kan importera till en annan DHIS2-instans."
+    "content": "Denna app hjälper till att hantera Global Fund ADEx-metadata. Global Fund kan regelbundet släppa nya versioner av ADEx-metadatapaketet. ADEx-administratörer kan använda denna app för att underlätta uppgradering av befintliga ADEx-metadatapaket till den senaste versionen. Användning av denna app påverkar inte befintliga data eller metadata, eftersom den är utformad för att endast fungera med ADEx-metadata. Denna app kan också användas för att exportera lokalt konfigurerade ADEx-utbytesindikatorer och datautbyteskonfiguration till en JSON-fil som du sedan kan importera till en annan DHIS2-instans."
   },
   "download-package": {
-    "title": "Ladda ner den senaste paketet",
-    "content": "Gå till GitHub och ladda ner <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">den senaste versionen</a> av GF ADEx-metadatapaketet. Spara filen på din lokala dator."
+    "title": "Ladda ner det senaste ADEx-metadatapaketet",
+    "content": "Gå till GitHub via denna länk <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\"> och ladda ner den senaste versionen</a> av ADEx-metadatapaketet. Spara filen på en lokal dator."
   },
   "upload-to-datastore": {
-    "title": "Ladda upp en kopia av GF ADEX-metadata till DHIS2-datastoren.",
-    "content": "Använd filen som du laddade ner från föregående steg, välj filen för att ladda upp den och klicka sedan på \"Ladda upp GFADEx-mall\". Detta sparar en kopia av GF ADEx-metadata i den lokala datastoren."
+    "title": "Ladda upp ADEx-referensmetadata till DHIS2-datastoren.",
+    "content": "Välj filen som laddades ner från föregående steg för att ladda upp och klicka på \"Ladda upp ADEx-paket\". Detta kommer att lagra en kopia av ADEx-referensmetadata-paketet i den lokala datastoren. Detta steg krävs för en ny server ADEx-installation."
   },
   "upload-btn": {
     "choose": "Välj fil",
     "no-file-chosen": "Ingen fil vald",
-    "upload": "Ladda upp GFADEx-mall"
+    "upload": "Ladda upp ADEx-paket"
+  },
+  "import-local" : {
+    "title": "Importera ADEx-metadata",
+    "content": "När de tidigare stegen är slutförda, klicka på knappen \"Importera ADEx-metadata\" nedan. Detta kommer att importera ADEx-metadata till DHIS2-instansen. Denna process kan ta några minuter att slutföra. När processen är klar visas en sammanfattning nedan."
   },
   "update-local" : {
-    "title": "Uppdatera GFADex-metadata",
-    "content": "När du har slutfört de tidigare stegen, klicka på knappen \"Uppdatera GF ADEx-metadata\" nedan. Detta kommer att uppdatera GF ADEx-metadata i din DHIS2-instans. Denna process tar några minuter att slutföra. När processen är klar kommer du att se en sammanfattning nedan."
+    "title": "Uppdatera ADEx-metadata",
+    "content": "När de tidigare stegen är slutförda, klicka på knappen \"Uppdatera ADEx-metadata\" nedan. Under denna process uppgraderas dina lokala ADEx-indikatorer. Dina befintliga täljardimensioner bevaras. Denna process kan ta några minuter att slutföra. När processen är klar visas en sammanfattning nedan."
   },
-  "update-metadata-btn": "Uppdatera GF ADEx-metadata",
-  "json-upload-success" : "GF ADEX-metadata uppladdad framgångsrikt",
-  "json-upload-error" : "Misslyckades att ladda upp GF ADEX-metadata",
+  "update-metadata-btn": "Uppdatera ADEx-metadata",
+  "json-upload-success" : "ADEx-metadata laddades upp framgångsrikt",
+  "json-upload-error" : "Fel vid uppladdning av ADEx-metadata",
   "json-invalid": "Den JSON-fil du laddade upp är ogiltig. Kontrollera filen och försök igen.",
   "upgrade-status-report": "Uppgraderingsstatusrapport",
   "object-type": "Objekttyp",
@@ -35,31 +39,32 @@
   "deleted" : "Raderad",
   "ignored" : "Ignorerad",
   "total": "Totalt",
-  "unknown-gfadex-indicators": "Okända GFADEx-indikatorer",
+  "unknown-ADEx-indicators": "Okända ADEx-indikatorer",
   "status"  : "Status",
   "status-code" : "Statuskod",
   "loading" : "Laddar... var god vänta.",
   "backup-config":    {
-    "title": "Säkerhetskopiera dina lokala indikatorer",
-    "content": "Innan du fortsätter, vänligen säkerhetskopiera dina lokala indikatorer. Detta gör att du kan återställa dina lokala indikatorer om något går fel under uppgraderingsprocessen. Klicka på knappen \"Säkerhetskopiera lokala indikatorer\" nedan för att fortsätta.",
-    "backup-btn": "Säkerhetskopiera lokala indikatorer"
+    "title": "Säkerhetskopiera lokala ADEx-indikatorer",
+    "content": "Innan du fortsätter, var god säkerhetskopiera dina lokala ADEx-indikatorer. Detta säkerställer att en kopia finns om något går fel under uppdateringsprocessen. Klicka på knappen \"Säkerhetskopiera lokala ADEX-indikatorer\" nedan för att fortsätta.",
+    "backup-btn": "Säkerhetskopiera lokala ADEx-indikatorer"
   },
-  "no-remote-metadata" : "Ingen GFADEx-mallmetadata hittades i datastoren. Ladda upp GFADEx-mallmetadata till datastoren och försök igen.",
-  "no-local-gfadex-indicators": "Inga GFADEx-indikatorer hittades i den lokala DHIS2-instansen. Importera GFADEx-mallmetadata och försök igen.",
-  "upgrade-error": "Fel vid uppgradering av befintlig GF-metadata. Försök igen.",
-  "export-local-package" : {
-    "title": "Exportera lokal GFADEx-paket",
-    "content": "Om du behöver överföra dina indikatorer till en annan DHIS2-instans, klicka på knappen \"Exportera lokalt paket\" nedan. Detta exporterar den lokala GFADEx-metadata till en JSON-fil som du kan spara på din lokala dator. Du kan sedan använda denna metadatafil för att importera till en annan DHIS2-instans. Observera att endast indikatorer som har konfigurerats i den lokala DHIS2-instansen kommer att inkluderas!",
-    "export-btn": "Exportera lokalt paket"
+  "no-remote-metadata" : "Inget ADEx-referensmetadata-paket hittades i datastoren. Ladda upp ADEx-referensmetadata-paketet till datastoren och försök igen",
+  "no-local-ADEx-indicators": "Ingen ADEx-konfiguration hittades. Gå tillbaka till början genom att importera ADEx-referensmetadata.",
+  "upgrade-error": "Fel vid uppgradering av befintlig ADEx-metadata. Försök igen.",
+  "export-local-config": {
+    "title": "Exportera ADEx-konfiguration",
+    "content": "När det är dags att flytta ADEx-konfigurationen till en annan DHIS2-instans, klicka på knappen \"Exportera ADEx-konfiguration\" nedan. Detta exporterar endast den konfigurerade ADEx-metadata samt datautbytesbegäranden till en JSON-fil som kan sparas lokalt. Denna JSON-fil importeras till den destination DHIS2-instansen. Observera att endast ADEx-indikatorer som har konfigurerats i den lokala DHIS2-instansen kommer att inkluderas!",
+    "export-btn": "Exportera ADEx-konfiguration",
+    "configured-only": "Inkludera endast konfigurerade indikatorer"
   },
-  "import-package" : {
-    "title": "Importera GFADEx-paket",
-    "content": "När du har laddat upp ADEx-paketet till DHIS2-datastoren kan du importera paketet till din lokala DHIS2-instans. Klicka på knappen \"Importera paket\" nedan för att fortsätta. Detta importerar GFADEx-metadata från datastoren till din lokala DHIS2-instans.",
-    "import-btn": "Importera paket",
-    "existing-package-warning": "Det verkar som att du redan har GFADex-metadata i din lokala DHIS2-instans. Att importera paketet kommer att skriva över din befintliga GFADex-metadata. Använd uppgraderingsprocessen istället."
+  "import-package": {
+    "title": "Importera ADEx-metadatapaket",
+    "content": "När ADEx-referensmetadata har laddats upp i DHIS2-datastoren kan ADEx-metadatapaketet importeras till den destination DHIS2-instansen. Klicka på knappen \"Importera paket\" nedan för att fortsätta. Detta importerar ADEx-referensmetadata från DHIS2-datastoren till den destination DHIS2-instansen.",
+    "import-btn": "Importera ADEx-paket",
+    "existing-package-warning": "Ett ADEx-metadatapaket finns redan. Att importera paketet kommer att skriva över din befintliga ADEx-metadata. Använd istället 'Uppdaterings'-processen."
   },
   "validation-report" : {
-    "title": "Valideringsrapport",
+    "title": "ADEx Valideringsrapport",
     "run-validation-btn": "Kör validering",
     "download-summary-btn": "Ladda ner sammanfattning (CSV)",
     "download-report-btn": "Ladda ner rapport (PDF)"

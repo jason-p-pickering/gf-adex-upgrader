@@ -1,66 +1,71 @@
 {
   "header": {
-    "title": "Application de GF ADEX Flow",
-    "exit": "Quitter"
+    "title": "Application ADEx Flow",
+    "exit" : "Quitter"
   },
   "introduction": {
     "title": "Introduction",
-    "content": "Cette application vous aidera à gérer vos métadonnées ADEx du Fonds mondial. Le Fonds mondial peut périodiquement publier de nouvelles versions des métadonnées ADEx. Cette application vous permettra de mettre à jour vos métadonnées existantes du GFADex vers la dernière version. Cette application n'affectera aucune de vos données ou métadonnées existantes, sauf celles du GFADEx. Cette application vous permettra également d'exporter vos métadonnées locales du GFADEx vers un fichier JSON que vous pourrez ensuite importer dans une autre instance DHIS2."
+    "content": "Cette application permet de gérer les métadonnées ADEx du Fonds mondial. Le Fonds mondial peut périodiquement publier de nouvelles versions du package de métadonnées ADEx. Les administrateurs ADEx peuvent utiliser cette application pour faciliter la mise à niveau des packages de métadonnées ADEx existants vers la dernière version. L'utilisation de cette application n'affectera pas les données ou les métadonnées existantes, car elle est conçue pour fonctionner uniquement avec les métadonnées ADEx. Cette application peut également être utilisée pour exporter les indicateurs d'échange ADEx configurés localement et la configuration d'échange de données vers un fichier JSON que vous pouvez ensuite importer dans une autre instance DHIS2."
   },
   "download-package": {
-    "title": "Télécharger le dernier package",
-    "content": "Rendez-vous sur GitHub et téléchargez <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\">la dernière version</a> du package de métadonnées GF ADEx. Enregistrez ce fichier sur votre ordinateur local."
+    "title": "Télécharger le dernier package de métadonnées ADEx",
+    "content": "Rendez-vous sur GitHub via ce lien <a href=\"https://github.com/dhis2/gf-adex-metadata/blob/main/exchange_indicators\" target=\"blank\"> et téléchargez la dernière version</a> du package de métadonnées ADEx. Enregistrez ce fichier sur un ordinateur local."
   },
   "upload-to-datastore": {
-    "title": "Téléverser une copie des métadonnées GF ADEX dans le datastore DHIS2.",
-    "content": "À l'aide du fichier que vous avez téléchargé lors de l'étape précédente, choisissez le fichier à téléverser, puis cliquez sur \"Téléverser le modèle GFADEx\". Cela sauvegardera une copie des métadonnées GF ADEx dans le datastore local."
+    "title": "Importer les métadonnées de référence ADEx dans le datastore DHIS2.",
+    "content": "Sélectionnez le fichier téléchargé à l'étape précédente pour l'importer, puis cliquez sur \"Importer le package ADEx\". Cela stockera une copie du package de métadonnées de référence ADEx dans le datastore local. Cette étape est nécessaire pour une nouvelle configuration ADEx du serveur."
   },
   "upload-btn": {
-    "choose": "Choisir le fichier",
-    "no-file-chosen": "Aucun fichier choisi",
-    "upload": "Téléverser le modèle GFADEx"
+    "choose": "Choisir un fichier",
+    "no-file-chosen": "Aucun fichier sélectionné",
+    "upload": "Importer le package ADEx"
   },
-  "update-local": {
-    "title": "Mettre à jour les métadonnées GFADex",
-    "content": "Une fois que vous avez terminé les étapes précédentes, cliquez sur le bouton \"Mettre à jour les métadonnées GF ADEx\" ci-dessous. Cela mettra à jour les métadonnées GF ADEx dans votre instance DHIS2. Ce processus prendra quelques minutes. Une fois le processus terminé, vous verrez un récapitulatif ci-dessous."
+  "import-local" : {
+    "title": "Importer les métadonnées ADEx",
+    "content": "Une fois les étapes précédentes terminées, cliquez sur le bouton \"Importer les métadonnées ADEx\" ci-dessous. Cela importera les métadonnées ADEx dans l'instance DHIS2. Ce processus peut prendre quelques minutes. Une fois le processus terminé, un résumé s'affichera ci-dessous."
   },
-  "update-metadata-btn": "Mettre à jour les métadonnées GF ADEx",
-  "json-upload-success": "Métadonnées GF ADEx téléversées avec succès",
-  "json-upload-error": "Échec du téléversement des métadonnées GF ADEx",
-  "json-invalid": "Le fichier JSON que vous avez téléversé est invalide. Veuillez vérifier le fichier et réessayer.",
-  "upgrade-status-report": "Rapport d'état de la mise à niveau",
+  "update-local" : {
+    "title": "Mettre à jour les métadonnées ADEx",
+    "content": "Une fois les étapes précédentes terminées, cliquez sur le bouton \"Mettre à jour les métadonnées ADEx\" ci-dessous. Pendant ce processus, vos indicateurs ADEx locaux seront mis à niveau. Vos définitions de numérateur existantes seront préservées. Ce processus peut prendre quelques minutes. Une fois le processus terminé, un résumé s'affichera ci-dessous."
+  },
+  "update-metadata-btn": "Mettre à jour les métadonnées ADEx",
+  "json-upload-success" : "Métadonnées ADEx importées avec succès",
+  "json-upload-error" : "Échec de l'importation des métadonnées ADEx",
+  "json-invalid": "Le fichier JSON que vous avez importé est invalide. Veuillez vérifier le fichier et réessayer.",
+  "upgrade-status-report": "Rapport d'état de mise à niveau",
   "object-type": "Type d'objet",
   "created": "Créé",
-  "updated": "Mis à jour",
-  "deleted": "Supprimé",
-  "ignored": "Ignoré",
+  "updated" : "Mis à jour",
+  "deleted" : "Supprimé",
+  "ignored" : "Ignoré",
   "total": "Total",
-  "unknown-gfadex-indicators": "Indicateurs GFADEx inconnus",
-  "status": "Statut",
-  "status-code": "Code de statut",
-  "loading": "Chargement... veuillez patienter.",
-  "backup-config": {
-    "title": "Sauvegardez vos indicateurs locaux",
-    "content": "Avant de continuer, veuillez sauvegarder vos indicateurs locaux. Cela vous permettra de restaurer vos indicateurs locaux en cas de problème lors du processus de mise à niveau. Cliquez sur le bouton \"Sauvegarder les indicateurs locaux\" ci-dessous pour continuer.",
-    "backup-btn": "Sauvegarder les indicateurs locaux"
+  "unknown-ADEx-indicators": "Indicateurs ADEx inconnus",
+  "status"  : "Statut",
+  "status-code" : "Code de statut",
+  "loading" : "Chargement... Veuillez patienter.",
+  "backup-config":    {
+    "title": "Sauvegarder les indicateurs ADEx locaux",
+    "content": "Avant de continuer, veuillez sauvegarder vos indicateurs ADEx locaux. Cela garantira qu'une copie existe au cas où quelque chose se passerait mal lors du processus de mise à jour. Cliquez sur le bouton \"Sauvegarder les indicateurs ADEX locaux\" ci-dessous pour continuer.",
+    "backup-btn": "Sauvegarder les indicateurs ADEx locaux"
   },
-  "no-remote-metadata": "Aucune métadonnée de modèle GFADEx trouvée dans le datastore. Veuillez téléverser la métadonnée du modèle GFADEx dans le datastore et réessayer.",
-  "no-local-gfadex-indicators": "Aucun indicateur GFADEx trouvé dans l'instance DHIS2 locale. Veuillez importer la métadonnée du modèle GFADEx et réessayer.",
-  "upgrade-error": "Erreur lors de la mise à niveau des métadonnées GF existantes. Veuillez réessayer.",
-  "export-local-package": {
-    "title": "Exporter le package GFADEx local",
-    "content": "Si vous devez transférer vos indicateurs vers une autre instance DHIS2, cliquez sur le bouton \"Exporter le package local\" ci-dessous. Cela exportera les métadonnées locales GFADEx vers un fichier JSON que vous pourrez enregistrer sur votre ordinateur local. Vous pourrez ensuite utiliser ce fichier de métadonnées pour l'importer dans une autre instance DHIS2. Notez que seuls les indicateurs configurés dans l'instance DHIS2 locale seront inclus !",
-    "export-btn": "Exporter le package local"
+  "no-remote-metadata" : "Aucun package de métadonnées de référence ADEx trouvé dans le datastore. Veuillez importer le package de métadonnées de référence ADEx dans le datastore et réessayer.",
+  "no-local-ADEx-indicators": "Aucune configuration ADEx trouvée. Revenez au début en important les métadonnées de référence ADEx.",
+  "upgrade-error": "Erreur lors de la mise à niveau des métadonnées ADEx existantes. Veuillez réessayer.",
+  "export-local-config": {
+    "title": "Exporter la configuration ADEx",
+    "content": "Lorsque vous devez déplacer la configuration ADEx vers une autre instance DHIS2, cliquez sur le bouton \"Exporter la configuration ADEx\" ci-dessous. Cela exportera uniquement les métadonnées ADEx configurées, ainsi que les demandes d'échange de données, vers un fichier JSON pouvant être enregistré localement. Ce fichier JSON est importé dans l'instance DHIS2 de destination. Notez que seuls les indicateurs ADEx configurés dans l'instance DHIS2 locale seront inclus !",
+    "export-btn": "Exporter la configuration ADEx",
+    "configured-only": "Inclure uniquement les indicateurs configurés"
   },
   "import-package": {
-    "title": "Importer le package GFADEx",
-    "content": "Une fois que vous avez téléversé le package ADEx dans le datastore DHIS2, vous pouvez importer le package dans votre instance DHIS2 locale. Cliquez sur le bouton \"Importer le package\" ci-dessous pour continuer. Cela importera les métadonnées GFADEx du datastore dans votre instance DHIS2 locale.",
-    "import-btn": "Importer le package",
-    "existing-package-warning": "Il semble que vous ayez déjà des métadonnées GFADex dans votre instance DHIS2 locale. L'importation du package écrasera vos métadonnées GFADex existantes. Veuillez utiliser le processus de mise à niveau à la place."
+    "title": "Importer le package de métadonnées ADEx",
+    "content": "Une fois que les métadonnées de référence ADEx ont été importées dans le datastore DHIS2, le package de métadonnées ADEx peut être importé dans l'instance DHIS2 de destination. Cliquez sur le bouton \"Importer le package\" ci-dessous pour continuer. Cela importera les métadonnées de référence ADEx du datastore DHIS2 dans l'instance DHIS2 de destination.",
+    "import-btn": "Importer le package ADEx",
+    "existing-package-warning": "Un package de métadonnées ADEx existe déjà. L'importation du package écrasera vos métadonnées ADEx existantes. Veuillez utiliser le processus de 'Mise à jour' à la place."
   },
-  "validation-report": {
-    "title": "Rapport de validation",
-    "run-validation-btn": "Exécuter la validation",
+  "validation-report" : {
+    "title": "Rapport de validation ADEx",
+    "run-validation-btn": "Lancer la validation",
     "download-summary-btn": "Télécharger le résumé (CSV)",
     "download-report-btn": "Télécharger le rapport (PDF)"
   }

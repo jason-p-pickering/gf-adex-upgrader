@@ -12,6 +12,7 @@ var indicatorsConf = {};
 var indicatorsUnconf = {};
 var exchanges = false;
 var root_orgunit = false;
+var metadataPackage = false;
 
 const iso3_codes = ["AFG", "ALB", "AGO", "ARM", "AZE", "BGD", "BLR", "BLZ",
     "BEN", "BTN", "BOL", "BWA", "BFA", "BDI", "CPV", "KHM", "CMR", "CAF", "TCD",
@@ -287,6 +288,12 @@ var validationResults = {
         "title": "The GFADEX reference metadata package should be imported to the datastore.",
         "instruction": "If you have not already imported a GFADEX metadata package, you should do so now.",
         "headers": [{ "title": "Message" }],
+        issues: []
+    },
+    "IND_UNKNOWN_IN_REQUESTS": {
+        "title": "GFADEX requests should not include indicators that are not in the GFADEX metadata package.",
+        "instruction": "The following indicators are not in the GFADEX metadata package, but are used in GFADEx requests. Unknown GFADEX indicator should not be used in any requests made to the GFADEx API.",
+        "headers": [{ "title": "ID" }, { "title": "Indicator name" }],
         issues: []
     }
 };
@@ -701,7 +708,6 @@ function validateRootOrgUnit(root_orgunit, exchanges, validationResults) {
 }
 
 function validateOrgUnitCode(root_orgunit, validationResults) {
-    
 
     const attributeValue = root_orgunit.attributeValues.find(
         (attributeValue) => attributeValue.attribute.id === "hpe7LiGDgvo"
@@ -715,7 +721,7 @@ function validateOrgUnitCode(root_orgunit, validationResults) {
 
     var orgunitCode = "";
     var attributeValueCode = "";
-    
+
     if (typeof root_orgunit?.code === "undefined" ){
         orgunitCode = "UNKNOWN";
     } else {
@@ -790,6 +796,27 @@ function addFooters(doc) {
         doc.text("Page " + String(i) + " of " + String(pageCount), doc.internal.pageSize.width / 2, 287, {
             align: "center"
         });
+    }
+}
+
+function identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPackage) {
+    const knownIndicators = metadataPackage.indicators.map(indicator => indicator.id);
+    const unknownIndicators = [];
+
+    for (var ex of exchanges) {
+        for (var req of ex.source.requests) {
+            for (var ind of req.dx) {
+                if (!knownIndicators.includes(ind)) {
+                    unknownIndicators.push(ind);
+                }
+            }
+        }
+    }
+    //Filter local GFADEx indicators which have been used in requests but which are not part of the GFADEX metadata package
+    const unknownIndicatorsInReqests = indicators.filter(indicator => unknownIndicators.includes(indicator.id));
+
+    if (unknownIndicatorsInReqests.length > 0) {
+        validationResults["IND_UNKNOWN_IN_REQUESTS"].issues = unknownIndicatorsInReqests.map(indicator => [indicator.id, indicator.name]);
     }
 }
 
@@ -925,7 +952,7 @@ export async function runValidation() {
     operands = await fetchDataElementOperands();
     dataElements = await fetchDataElements();
     dataSets = await fetchDataSets();
-    const metadataPackage = await fetchIndicatorsFromDataStore();
+    metadataPackage = await fetchIndicatorsFromDataStore();
 
     Promise.all([systemInfo, exchanges, root_orgunit, indicators, operands, dataElements, dataSets, metadataPackage])
         .then(console.log("Fetched metadata."))
@@ -961,7 +988,9 @@ export async function runValidation() {
         findBasicAuth(exchanges, validationResults);
         validateRootOrgUnit(root_orgunit, exchanges, validationResults);
         validateExchangeTargetOuScheme(exchanges, validationResults);
-        checkTargetOutputIdScheme(exchanges, validationResults); } else {
+        checkTargetOutputIdScheme(exchanges, validationResults);
+        identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPackage);
+    } else {
         validationResults["EX_EXIST"].issues.push(["No exchanges found"]);
     }
 

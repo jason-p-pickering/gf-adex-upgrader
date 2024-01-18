@@ -69,59 +69,52 @@ export function fetchIndicatorsFromDataStore() {
 
 
 export async function upgradeExistingIndicators(remote, local) {
-    let remoteIndicators = remote.indicators;
+    try {
+        let remoteIndicators = remote.indicators;
 
-    local.forEach((indicator) => {
-        //Update the remote indicator with the local indicator
-        const remoteIndicator = remote.indicators.find(
-            (remoteIndicator) => remoteIndicator.id === indicator.id
-        );
-        if (remoteIndicator) {
-            remoteIndicator.numerator = indicator.numerator;
-        }});
-
-    remote.indicators = remoteIndicators;
-
-    //Identify the indicators which need to be deleted
-    const indicatorsToDelete = identifyIndicatorsToDelete(
-        local,
-        remote.indicators
-    );
-
-    //Generate the list of indicators to delete
-    const indicatorsToDeleteList = createIndicatorsToDeleteList(indicatorsToDelete);
-
-    //Upload the rest of the metadata package to the /metadata
-    //endpoint. Alert the user if an error occurs.
-
-    fetch(baseUrl + "metadata", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(remote),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            renderUpgradeStatusReport(data, indicatorsToDeleteList);
-        })
-        .catch((error) => {
-            console.error("Error upgrading existing GF metadata:", error);
-            alert(__("upgrade-error"));
+        local.forEach((indicator) => {
+            // Update the remote indicator with the local indicator
+            const remoteIndicator = remote.indicators.find(
+                (remoteIndicator) => remoteIndicator.id === indicator.id
+            );
+            if (remoteIndicator) {
+                remoteIndicator.numerator = indicator.numerator;
+            }
         });
+
+        remote.indicators = remoteIndicators;
+
+        // Upload the rest of the metadata package to the /metadata endpoint
+        const response = await fetch(baseUrl + "metadata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(remote),
+        });
+
+        if (!response.ok) {
+            // Handle non-successful response
+            console.error("Error upgrading existing GF metadata:", response.statusText);
+            alert(__("upgrade-error"));
+        } else {
+            const data = await response.json();
+            return data;
+        }
+    } catch (error) {
+        console.error("Error upgrading existing GF metadata:", error);
+        alert(__("upgrade-error"));
+        throw error; // Re-throw the error so that the calling code can handle it if necessary
+    }
 }
 
 /* global __ */
-export function renderUpgradeStatusReport(statusReport, indicatorsToDeleteList) {
+export function renderUpgradeStatusReport(statusReport) {
     //Just display the raw JSON as text
     // var html = "<h3>Upgrade Status Report</h3>";
     // html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
     // eslint-disable-next-line no-undef
     var html = generateSummaryTable(statusReport);
-    if (indicatorsToDeleteList != "") {
-        html += "<h3>" + __("unknown-gfadex-indicators") + "</h3>";
-        html += indicatorsToDeleteList;
-    }
     document.querySelector("#upgradeStatus").innerHTML = html;
     document.querySelector("#update-gf-metadata-btn").disabled = false;
 }
@@ -143,7 +136,12 @@ export async function upgradeIndicators() {
         alert(__("no-local-gfadex-indicators"));
         return;
     }
-    upgradeExistingIndicators(remote, local);
+
+    upgradeExistingIndicators(remote, local).then((statusReport) => {
+        console.log("Upgrade status report:", statusReport);
+        renderUpgradeStatusReport(statusReport);
+    });
+
 }
 
 export function verifyRemoteMetadata(remote) {
@@ -267,8 +265,14 @@ export async function fetchUserLocale() {
 }
 
 export function generateSummaryTable(data) {
-
-    const tableHeaders = [__("object-type"), __("created"), __("updated"), __("deleted"), __("ignored"), __("total")];
+    const tableHeaders = [
+        __("object-type"),
+        __("created"),
+        __("updated"),
+        __("deleted"),
+        __("ignored"),
+        __("total")
+    ];
 
     const tableRows = data.response.typeReports.map((report) => {
         const klassWithoutPrefix = report.klass.replace(/^.*\./, "");
@@ -280,61 +284,28 @@ export function generateSummaryTable(data) {
             report.stats.ignored,
             report.stats.total,
         ];
-        return `<tr>${rowValues.map((value) => `<td>${value}</td>`).join("")}</tr>`;
+
+        const rowHTML = rowValues.map((value) => `<td>${value}</td>`).join("");
+        return `<tr>${rowHTML}</tr>`;
     });
 
     const tableHTML = `
-          <table border="1">
+        <table border="1">
             <thead>
-              <tr>${tableHeaders.map((header) => `<th>${header}</th>`).join("")}</tr>
+                <tr>${tableHeaders.map((header) => `<th>${header}</th>`).join("")}</tr>
             </thead>
             <tbody>
-              ${tableRows.join("")}
+                ${tableRows.join("")}
             </tbody>
-          </table>
-        `;
-    var html = "<h3>" + __("upgrade-status-report") + "</h3>";
-    html += "<h3>" + __("status") + ":" + data.httpStatus + "</h3>";
-    html += "<h3>" + __("status-code") + ":" + data.httpStatusCode + "</h3>";
-    html += tableHTML;
+        </table>`;
+
+    const html = `
+        <h3>${__("upgrade-status-report")}</h3>
+        <h3>${__("status")}:${data.httpStatus}</h3>
+        <h3>${__("status-code")}:${data.httpStatusCode}</h3>
+        ${tableHTML}`;
 
     return html;
-}
-
-function identifyIndicatorsToDelete(existingIndicators, remoteIndicators) {
-    const remoteIndicatorIds = remoteIndicators.map((indicator) => indicator.id);
-    //If we don't have any existing indicators, return an empty array
-    if (existingIndicators.length === 0) {
-        return [];
-    }
-
-    const indicatorsToDelete = existingIndicators.filter(
-        (indicator) => !remoteIndicatorIds.includes(indicator.id)
-    );
-
-    if (indicatorsToDelete.length === 0) {
-        return [];
-    }
-
-    return indicatorsToDelete.map((indicator) => {
-        return {
-            id: indicator.id,
-            name: indicator.name,
-        };
-    });
-}
-
-function createIndicatorsToDeleteList(indicatorsToDelete) {
-    if (indicatorsToDelete.length === 0) {
-        return "";
-    }
-
-    const listItems = indicatorsToDelete.reduce(
-        (accumulator, indicator) => accumulator + `<li>${indicator.name} (${indicator.id})</li>`,
-        ""
-    );
-
-    return `<ul>${listItems}</ul>`;
 }
 
 function showLoading() {
@@ -390,7 +361,7 @@ async function createLocalPackage(includeConfiguredOnly = false) {
         let filteredIndicators = [];
         indicatorGroup.indicators.forEach((indicator) => {
             if (indicatorIds.includes(indicator.id)) {
-                filteredIndicators.push({id: indicator.id});
+                filteredIndicators.push({ id: indicator.id });
             }
         });
         indicatorGroup.indicators = filteredIndicators;
@@ -429,5 +400,5 @@ async function exportJsonData(json_data) {
         dlAnchorElem.click();
         resetUpgradeStatus();
     }
-    
+
 }
