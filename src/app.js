@@ -37,8 +37,6 @@ import { importMetadataPackage } from "./components/ImportMetadataPackage.js";
 import { showValidationReport } from "./views/showValidationReport.js";
 import { runValidation, reportToPDF, configToCSV } from "./components/ValidationReport.js";
 
-
-
 var baseUrl = getContextPath() + "/api/";
 var userLocale = false;
 const appLocation = window.location.pathname;
@@ -97,5 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
             translator.translatePageTo(userLocale);
         });
     });
+
+
 });
 
