@@ -353,6 +353,12 @@ async function createLocalPackage(includeConfiguredOnly = false) {
     }
     //Replace the remote indicators with the local indicators
     remote.indicators = localIndicators;
+    //Remove all of the createdBy and lastUpdatedBy properties
+    remote.indicators.forEach((indicator) => {
+        indicator.createdBy = {};
+        indicator.lastUpdatedBy = {};
+    });
+
 
     //Get a map of indicator ids for easy lookup
     const indicatorIds = localIndicators.map((indicator) => indicator.id);
@@ -370,6 +376,10 @@ async function createLocalPackage(includeConfiguredOnly = false) {
     //Append the data exchange to the remote metadata
     const dataExchanges = await fetchLocalDataExchanges();
     remote.aggregateDataExchanges = dataExchanges;
+    remote.aggregateDataExchanges.forEach((dataExchange) => {
+        dataExchange.createdBy = {};
+        dataExchange.lastUpdatedBy = {};
+    });
 
     //Create the backup object
     return remote;
@@ -402,3 +412,5 @@ async function exportJsonData(json_data) {
     }
 
 }
+
+
