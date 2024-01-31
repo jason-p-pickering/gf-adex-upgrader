@@ -35,6 +35,7 @@ import { showExportLocalConfigWorkflow } from "./views/showExportLocalConfigWork
 import { showImportMetadataPackage } from "./views/showImportMetadataPackage.js";
 import { importMetadataPackage } from "./components/ImportMetadataPackage.js";
 import { showValidationReport } from "./views/showValidationReport.js";
+import { showImportDataExchange } from "./views/showImportDataExchange.js";
 import { runValidation, reportToPDF, configToCSV } from "./components/ValidationReport.js";
 
 
@@ -73,6 +74,7 @@ window.showDownloadReferencePackage = showDownloadReferencePackage;
 window.showUploadToDataStore = showUploadToDataStore;
 window.showUpdateIndicatorsWorkflow = showUpdateIndicatorsWorkflow;
 window.showExportConfigWorkflow = showExportLocalConfigWorkflow;
+window.showImportDataExchange = showImportDataExchange;
 window.showImportMetadataPackage = showImportMetadataPackage;
 window.importMetadataPackage = importMetadataPackage;
 window.showValidationReport = showValidationReport;

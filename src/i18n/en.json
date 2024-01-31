@@ -66,5 +66,11 @@
       "run-validation-btn": "Run Validation",
       "download-summary-btn": "Download Summary (CSV)",
       "download-report-btn": "Download Report (PDF)"
+    },
+    "import-exchange" :{
+      "title": "Import ADEx data exchange",
+      "content" : "Once you have prepared a data exchange, you can use this workflow to import it into the current system. You will need to have a copy of the data exchange (as JSON). You will also need to have your PAT (Personal Access Token) available.",
+      "pat": "Personal Access Token",
+      "import-btn": "Import ADEx data exchange"
     }
 }
