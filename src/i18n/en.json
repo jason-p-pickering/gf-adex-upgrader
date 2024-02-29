@@ -51,9 +51,14 @@
     "upgrade-error": "Error upgrading existing ADEx metadata. Please try again.",
     "export-local-config": {
       "title": "Export ADEx configuration",
-      "content": "When it is time to move the ADEx configuration to another DHIS2 instance, click the \"Export ADEx configuration\" button below. This will export a complete metadata pacakge which you can import into another DHIS2 instance. This package will include all ADEx exchange indicators and data exchange configurations. Note: You can choose whether to include only configured indicators or all indicators with the tick box below.",
-      "export-btn": "Export ADEx configuration",
-      "configured-only": "Include only configured indicators"
+      "content": "When it is time to migrate your configuration to production or another development instance, you can export your local configuration with the button below. Indicators, indicator groups and other ADEx metadata components will be exported to a JSON file. This file can then be imported into another DHIS2 instance. Click the \"Export ADEx configuration\" button below to proceed.",
+      "export-local-config" : "Export ADEx configuration",
+      "export-config-btn": "Export ADEx configuration",
+      "configured-only": "Include only configured indicators",
+      "btn-export-exchange" : "Export exchange",
+      "select-destination" : "Select a destination server:",
+      "token" : "Authentication token (optional):",
+      "export-options-content" : "You can select one of the ADEx exchange configurations to export. The selected configuration will be exported to a JSON file which can be imported into another DHIS2 instance. You can optionally specify an authentication token to be used when performing the data exchange. Select a destination server and click the \"Export exchange\" button below to proceed."
     },
     "import-package": {
       "title": "Import ADEx metadata package",

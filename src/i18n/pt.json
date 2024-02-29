@@ -53,9 +53,14 @@
   "upgrade-error": "Erro ao atualizar os metadados ADEx existentes. Por favor, tente novamente.",
   "export-local-config": {
     "title": "Exportar configuração ADEx",
-    "content": "Quando for hora de mover a configuração ADEx para outra instância do DHIS2, clique no botão \"Exportar configuração ADEx\" abaixo. Isso exportará apenas os metadados ADEx configurados, bem como as solicitações de troca de dados, para um arquivo JSON que pode ser salvo localmente. Este arquivo JSON é importado para a instância do DHIS2 de destino. Observe que apenas os indicadores ADEx que foram configurados na instância local do DHIS2 serão incluídos!",
-    "export-btn": "Exportar configuração ADEx",
-    "configured-only": "Incluir apenas indicadores configurados"
+    "content": "Quando é hora de migrar sua configuração para produção ou outra instância de desenvolvimento, você pode exportar sua configuração local com o botão abaixo. Indicadores, grupos de indicadores e outros componentes de metadados ADEx serão exportados para um arquivo JSON. Este arquivo pode então ser importado para outra instância do DHIS2. Clique no botão \"Exportar configuração ADEx\" abaixo para prosseguir.",
+    "export-local-config": "Exportar configuração ADEx",
+    "export-config-btn": "Exportar configuração ADEx",
+    "configured-only": "Incluir apenas indicadores configurados",
+    "btn-export-exchange": "Exportar troca",
+    "select-destination": "Selecione um servidor de destino:",
+    "token": "Token de autenticação (opcional):",
+    "export-options-content": "Você pode selecionar uma das configurações de troca ADEx para exportar. A configuração selecionada será exportada para um arquivo JSON que pode ser importado para outra instância do DHIS2. Você pode opcionalmente especificar um token de autenticação a ser usado durante a realização da troca de dados. Selecione um servidor de destino e clique no botão \"Exportar troca\" abaixo para prosseguir."
   },
   "import-package": {
     "title": "Importar pacote de metadados ADEx",

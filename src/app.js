@@ -23,6 +23,7 @@ import { upgradeIndicators } from "./js/utils.js";
 import { fetchUserLocale } from "./js/utils.js";
 import { exportLocalIndicators } from "./js/utils.js";
 import { exportLocalConfig } from "./js/utils.js";
+import { exportLocalExchange } from "./js/utils.js";
 import { CurrentDate } from "./components/CurrentDate.js";
 import { HeaderBar } from "./components/HeaderBar.js";
 import { NavigationStrip } from "./components/NavigationStrip.js";
@@ -79,12 +80,13 @@ window.showValidationReport = showValidationReport;
 window.runValidation = runValidation;
 window.reportToPDF = reportToPDF;
 window.configToCSV = configToCSV;
+window.exportLocalExchange = exportLocalExchange;
 
 document.addEventListener("DOMContentLoaded", function () {
+
     fetchUserLocale().then((locale) => {
         const availableLanguages = ["en", "fr", "pt", "sv"];
         const defaultLanguage = "en";
-        //If the user locale is not in the tranlsation list, use the default language
         if (!availableLanguages.includes(locale)) {
             console.log("User locale", locale," not found in translation list. Using default language: " + defaultLanguage);
             userLocale = defaultLanguage;
@@ -93,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         translator.fetch(availableLanguages, true).then(() => {
-        // -> Translations are ready...
             translator.translatePageTo(userLocale);
         });
     });

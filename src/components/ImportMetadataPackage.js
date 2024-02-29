@@ -56,6 +56,7 @@ export class ImportMetadataPackage extends HTMLElement {
         this.innerHTML = `<h2 data-i18n="import-package.title"></h2>
     <p data-i18n="import-package.content"></p>
     <button id="import-gf-pacakge-btn" onclick="importMetadataPackage()" data-i18n="import-package.import-btn"></button>
-    <upgrade-status></upgrade-status>`;
+    <upgrade-status></upgrade-status>
+    `;
     }
 }

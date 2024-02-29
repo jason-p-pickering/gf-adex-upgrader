@@ -96,11 +96,11 @@ export async function upgradeExistingIndicators(remote, local) {
         if (!response.ok) {
             // Handle non-successful response
             console.error("Error upgrading existing GF metadata:", response.statusText);
-            alert(__("upgrade-error"));
-        } else {
-            const data = await response.json();
-            return data;
         }
+
+        const data = await response.json();
+        return data;
+
     } catch (error) {
         console.error("Error upgrading existing GF metadata:", error);
         alert(__("upgrade-error"));
@@ -110,6 +110,7 @@ export async function upgradeExistingIndicators(remote, local) {
 
 /* global __ */
 export function renderUpgradeStatusReport(statusReport) {
+    console.log("Status report is : ", statusReport);
     //Just display the raw JSON as text
     // var html = "<h3>Upgrade Status Report</h3>";
     // html += "<pre>" + JSON.stringify(statusReport, null, 2) + "</pre>";
@@ -117,6 +118,10 @@ export function renderUpgradeStatusReport(statusReport) {
     var html = generateSummaryTable(statusReport);
     document.querySelector("#upgradeStatus").innerHTML = html;
     document.querySelector("#update-gf-metadata-btn").disabled = false;
+    if (statusReport.httpStatusCode != 200) {
+        // eslint-disable-next-line no-undef
+        document.querySelector("#json-report").innerHTML = JSON.stringify(statusReport, null, 2); 
+    }
 }
 
 export async function upgradeIndicators() {
@@ -137,10 +142,10 @@ export async function upgradeIndicators() {
         return;
     }
 
-    upgradeExistingIndicators(remote, local).then((statusReport) => {
-        console.log("Upgrade status report:", statusReport);
+    const statusReport = await upgradeExistingIndicators(remote, local);
+    if (statusReport) {
         renderUpgradeStatusReport(statusReport);
-    });
+    }
 
 }
 
@@ -318,7 +323,7 @@ function resetUpgradeStatus() {
     document.querySelector("#upgradeStatus").innerHTML = "";
 }
 
-async function fetchLocalDataExchanges() {
+export async function fetchLocalDataExchanges() {
 
     const data = await d2Fetch("aggregateDataExchanges.json?filter=target.api.url:like:globalfund&fields=*&paging=false");
     if (!data || data.aggregateDataExchanges.length === 0) {
@@ -334,6 +339,7 @@ async function fetchLocalDataExchanges() {
 async function createLocalPackage(includeConfiguredOnly = false) {
     //Fetch the remote metadata
     let remote = await fetchIndicatorsFromDataStore();
+    console.log("Initial remote is : ", remote);
     //There might not be anything in the datastore, if so, then alert the user
     if (!remote || remote.length === 0) {
         alert(__("no-remote-metadata"));
@@ -353,7 +359,7 @@ async function createLocalPackage(includeConfiguredOnly = false) {
     }
     //Replace the remote indicators with the local indicators
     remote.indicators = localIndicators;
-
+    console.log("Remote metadata is : ", remote);
     //Get a map of indicator ids for easy lookup
     const indicatorIds = localIndicators.map((indicator) => indicator.id);
 
@@ -367,12 +373,31 @@ async function createLocalPackage(includeConfiguredOnly = false) {
         indicatorGroup.indicators = filteredIndicators;
     });
 
-    //Append the data exchange to the remote metadata
-    const dataExchanges = await fetchLocalDataExchanges();
-    remote.aggregateDataExchanges = dataExchanges;
-
     //Create the backup object
     return remote;
+}
+
+
+export async function exportLocalExchange() {
+
+    const dataExchanges = await fetchLocalDataExchanges();
+    const exchangeUID = document.getElementById("data-exchanges").value;
+    const token = document.getElementById("token").value;
+    const destinationServer = document.getElementById("destination-server").value;
+
+    const exchange = dataExchanges.find((exchange) => exchange.id === exchangeUID);
+    /* Setting these to null otherwise, the importer will complain about the createdBy and lastUpdatedBy fields */
+    exchange.createdBy = null;
+    exchange.lastUpdatedBy = null;
+    exchange.user = null;
+    /*Set the token to a placeholder if it is blank or undefined*/
+    exchange.target.api.accessToken = token ? token : "d2_placeholdertoken";
+    exchange.target.api.url = destinationServer;
+    
+
+    const localExchange =  { aggregateDataExchanges: [exchange] };
+    
+    exportJsonData(localExchange);
 }
 
 export async function exportLocalIndicators() {
@@ -384,11 +409,14 @@ export async function exportLocalIndicators() {
 export async function exportLocalConfig() {
     //Get the value of the checkbox
     const onlyConfiguredIndicators = document.querySelector("#only-configured-indicators").checked;
-    const localConfig = await createLocalPackage(onlyConfiguredIndicators);
+    //Get the token and destination server
+    const token = document.querySelector("#token").value;
+    const destinationServer = document.querySelector("#destination-server").value;
+    const localConfig = await createLocalPackage(onlyConfiguredIndicators, token, destinationServer);
     exportJsonData(localConfig);
 }
 
-async function exportJsonData(json_data) {
+export async function exportJsonData(json_data) {
 
     //There might not be anything in the backup, if so skip the download
     if (json_data) {
@@ -402,3 +430,5 @@ async function exportJsonData(json_data) {
     }
 
 }
+
+
