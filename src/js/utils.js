@@ -68,6 +68,27 @@ export function fetchIndicatorsFromDataStore() {
 }
 
 
+export async function fetchPackageReleaseInfo() {
+    const url = "https://api.github.com/repos/dhis2/gf-adex-metadata/releases/latest";
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+}
+
+
+export async function fetchRemoteAppVersion() {
+    const url = "https://api.github.com/repos/dhis2/gf-adex-flow-app/releases/latest";
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.tag_name;
+}
+
+export async function fetchLocalAppVersion() {
+
+    const manifest = await d2Fetch("apps/ADEx-Flow/manifest.webapp");
+    return manifest.version;
+}
+
 export async function upgradeExistingIndicators(remote, local) {
     try {
         let remoteIndicators = remote.indicators;
@@ -393,7 +414,6 @@ export async function exportLocalExchange() {
     /*Set the token to a placeholder if it is blank or undefined*/
     exchange.target.api.accessToken = token ? token : "d2_placeholdertoken";
     exchange.target.api.url = destinationServer;
-    
 
     const localExchange =  { aggregateDataExchanges: [exchange] };
     

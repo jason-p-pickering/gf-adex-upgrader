@@ -5,7 +5,8 @@
   },
   "introduction": {
     "title": "Introduction",
-    "content": "This app will help manage Global Fund ADEx Metadata. The Global Fund may periodically release new versions of the ADEx metadata package. ADEx administrators can use this app to facilitate upgrading existing ADEx metadata packages to the latest version. Using this app will not affect any existing data or metadata, as it is designed to only work with ADEx metadata. This app can also be used to export locally configured ADEx exchange indicators and data exchange configuration to a JSON file which you can then import into another DHIS2 instance."
+    "content": "This app will help manage Global Fund ADEx Metadata. The Global Fund may periodically release new versions of the ADEx metadata package. ADEx administrators can use this app to facilitate upgrading existing ADEx metadata packages to the latest version. Using this app will not affect any existing data or metadata, as it is designed to only work with ADEx metadata. This app can also be used to export locally configured ADEx exchange indicators and data exchange configuration to a JSON file which you can then import into another DHIS2 instance.",
+    "metadata-upgrade-available" : "A new version of the ADEx metadata package is available. Please visit the ADEX Metadata GitHub repository to download the latest version."
   },
   "download-package": {
     "title": "Download the latest ADEx metadata package",

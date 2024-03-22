@@ -14,6 +14,8 @@ window.DataTable = DataTable;
 import * as jspdf from "jspdf";
 window.jspdf = jspdf;
 import "jspdf-autotable";
+import * as semver from "semver";
+window.semver = semver;
 //JS
 
 import { getContextPath } from "./js/utils.js";
