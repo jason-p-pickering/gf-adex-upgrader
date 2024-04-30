@@ -68,5 +68,15 @@
     "run-validation-btn": "Kör validering",
     "download-summary-btn": "Ladda ner sammanfattning (CSV)",
     "download-report-btn": "Ladda ner rapport (PDF)"
+  },
+  "update-impl-type" : {
+    "title": "Uppdatera implementeringstyp",
+    "content": "Välj den implementeringstyp du vill uppdatera till. Alla GFADEX-indikatorer kommer att uppdateras till denna implementeringstyp. Klicka på knappen \"Uppdatera implementeringstyp\" nedan för att fortsätta.",
+    "update-impl-type-btn": "Uppdatera implementeringstyp",
+    "update": "Uppdatera",
+    "impl-type": "Implementeringstyp",
+    "impl-type-required": "Implementeringstyp krävs",
+    "impl-type-updated": "Implementeringstypen uppdaterades framgångsrikt",
+    "impl-type-update-error": "Fel vid uppdatering av implementeringstyp. Försök igen."
   }
 }

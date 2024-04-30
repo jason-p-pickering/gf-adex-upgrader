@@ -452,3 +452,93 @@ export async function exportJsonData(json_data) {
 }
 
 
+export const allowed_implementer_types = [
+    {
+        "name": "Governmental Organization",
+        "id": "HXEkCx9uasx"
+    },
+    {
+        "name": "United Nations Development Programme",
+        "id": "ddY6CWfWwoX"
+    },
+    {
+        "name": "Local Private Sector",
+        "id": "WqYrHai9gYJ"
+    },
+    {
+        "name": "Other Multilateral Organization",
+        "id": "KuPZumnAA3k"
+    },
+    {
+        "name": "Faith Based Organization",
+        "id": "izUdgJ2ixiI"
+    },
+    {
+        "name": "Ministry of Finance",
+        "id": "ldI7bQZyhIM"
+    },
+    {
+        "name": "Other Entity",
+        "id": "buBCzm4Q9py"
+    },
+    {
+        "name": "Other Governmental Organization",
+        "id": "iCCfsjluy7r"
+    },
+    {
+        "name": "International Private Sector",
+        "id": "S2So8oWX78q"
+    },
+    {
+        "name": "International Faith Based Organization",
+        "id": "jK7wYMb7ZcV"
+    },
+    {
+        "name": "Other Community Sector Entity",
+        "id": "BBHddcb1ZVr"
+    },
+    {
+        "name": "United Nations Organization",
+        "id": "Kg346mmQUxe"
+    },
+    {
+        "name": "International Non-Governmental Organization",
+        "id": "nLQuKoZXttR"
+    },
+    {
+        "name": "Ministry of Health",
+        "id": "DxDJklvqL7Q"
+    },
+    {
+        "name": "NGO/CBO/Academic",
+        "id": "MXeOmeI8Y36"
+    },
+    {
+        "name": "Civil Society Organization",
+        "id": "FKpadYSM48G"
+    },
+    {
+        "name": "Local Faith Based Organization",
+        "id": "yl4h3HuXlfE"
+    },
+    {
+        "name": "Multilateral Organization",
+        "id": "FBS4envxo55"
+    },
+    {
+        "name": "Community led organizations",
+        "id": "pZZmYvr4qBh"
+    },
+    {
+        "name": "Private Sector",
+        "id": "c9sd0PVzL1G"
+    },
+    {
+        "name": "Local Non-Governmental Organization",
+        "id": "VPLzNdhNfmj"
+    },
+    {
+        "name": "Other Organization",
+        "id": "bvKLmM9thFG"
+    }
+];

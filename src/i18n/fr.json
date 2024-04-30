@@ -68,5 +68,15 @@
     "run-validation-btn": "Lancer la validation",
     "download-summary-btn": "Télécharger le résumé (CSV)",
     "download-report-btn": "Télécharger le rapport (PDF)"
+  },
+  "update-impl-type" : {
+    "title": "Mettre à jour le type de mise en œuvre",
+    "content": "Sélectionnez le type de mise en œuvre que vous souhaitez mettre à jour. Tous les indicateurs GFADEX seront mis à jour vers ce type de mise en œuvre. Cliquez sur le bouton \"Mettre à jour le type de mise en œuvre\" ci-dessous pour continuer.",
+    "update-impl-type-btn": "Mettre à jour le type de mise en œuvre",
+    "update": "Mettre à jour",
+    "impl-type": "Type de mise en œuvre",
+    "impl-type-required": "Le type de mise en œuvre est requis",
+    "impl-type-updated": "Type de mise en œuvre mis à jour avec succès",
+    "impl-type-update-error": "Erreur lors de la mise à jour du type de mise en œuvre. Veuillez réessayer."
   }
 }

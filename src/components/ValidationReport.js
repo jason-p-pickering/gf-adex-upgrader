@@ -1,6 +1,6 @@
 
 
-import { d2Fetch, fetchIndicators, fetchIndicatorsFromDataStore, fetchPackageReleaseInfo, fetchRemoteAppVersion, fetchLocalAppVersion } from "../js/utils.js";
+import { d2Fetch, fetchIndicators, fetchIndicatorsFromDataStore, fetchPackageReleaseInfo, fetchRemoteAppVersion, fetchLocalAppVersion, allowed_implementer_types } from "../js/utils.js";
 
 var indicators = false;
 var operands = false;
@@ -46,96 +46,6 @@ var indicatorpTypes = {
     "YEARLY": []
 };
 
-const allowed_implementer_types = [
-    {
-        "name": "Governmental Organization",
-        "id": "HXEkCx9uasx"
-    },
-    {
-        "name": "United Nations Development Programme",
-        "id": "ddY6CWfWwoX"
-    },
-    {
-        "name": "Local Private Sector",
-        "id": "WqYrHai9gYJ"
-    },
-    {
-        "name": "Other Multilateral Organization",
-        "id": "KuPZumnAA3k"
-    },
-    {
-        "name": "Faith Based Organization",
-        "id": "izUdgJ2ixiI"
-    },
-    {
-        "name": "Ministry of Finance",
-        "id": "ldI7bQZyhIM"
-    },
-    {
-        "name": "Other Entity",
-        "id": "buBCzm4Q9py"
-    },
-    {
-        "name": "Other Governmental Organization",
-        "id": "iCCfsjluy7r"
-    },
-    {
-        "name": "International Private Sector",
-        "id": "S2So8oWX78q"
-    },
-    {
-        "name": "International Faith Based Organization",
-        "id": "jK7wYMb7ZcV"
-    },
-    {
-        "name": "Other Community Sector Entity",
-        "id": "BBHddcb1ZVr"
-    },
-    {
-        "name": "United Nations Organization",
-        "id": "Kg346mmQUxe"
-    },
-    {
-        "name": "International Non-Governmental Organization",
-        "id": "nLQuKoZXttR"
-    },
-    {
-        "name": "Ministry of Health",
-        "id": "DxDJklvqL7Q"
-    },
-    {
-        "name": "NGO/CBO/Academic",
-        "id": "MXeOmeI8Y36"
-    },
-    {
-        "name": "Civil Society Organization",
-        "id": "FKpadYSM48G"
-    },
-    {
-        "name": "Local Faith Based Organization",
-        "id": "yl4h3HuXlfE"
-    },
-    {
-        "name": "Multilateral Organization",
-        "id": "FBS4envxo55"
-    },
-    {
-        "name": "Community led organizations",
-        "id": "pZZmYvr4qBh"
-    },
-    {
-        "name": "Private Sector",
-        "id": "c9sd0PVzL1G"
-    },
-    {
-        "name": "Local Non-Governmental Organization",
-        "id": "VPLzNdhNfmj"
-    },
-    {
-        "name": "Other Organization",
-        "id": "bvKLmM9thFG"
-    }
-];
 
 class ValidationResult {
     constructor(title, instruction, headers) {
@@ -313,6 +223,12 @@ var validationResults = {
         "title": "The GFADEX app should be the latest version.",
         "instruction": "A new version of the GFADEX app is available. You should update the GFADEX app to the latest version. The ADEx Flow app is availble in the DHIS2 App Hub. Open the App Management app and search for \"ADEx Flow\" to install the latest version.",
         "headers": [{ "title": "Remote version" }, { "title": "Local version" }],
+        issues: []
+    },
+    "SINGLE_IMPLEMENTER_TYPE": {
+        "title": "All GFADEX indicators which are configured should be attributed to a single implementer type.",
+        "instruction": "Review the indicators listed below and ensure that they are all attributed to a single implementer type.",
+        "headers": [  { "title": "Implementer type" }, {"title": "Count of indicators" }],
         issues: []
     }
 };
@@ -842,6 +758,12 @@ function identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPack
 }
 
 
+function getUniqueImplementerTypes(indicatorsConf) {
+    const implementerTypes = indicatorsConf.map(indicator => indicator.aggregateExportAttributeOptionCombo);
+    const uniqueImplementerTypes = [...new Set(implementerTypes)];
+    //Remape these to readable values with the help of the allowed_implementer_types
+    return uniqueImplementerTypes.map(implType => allowed_implementer_types.find(impl => impl.id === implType).name);
+}
 
 function identifyMutuallyExclusiveAgeBands(indicatorsConf, exchanges) {
 
@@ -953,6 +875,40 @@ function checkAppVersion(remoteAppVersion, localAppVersion) {
 
 }
 
+function checkSingleImplementerType(indicatorsConf) {
+    const indicatorImplementerTypeMap = {};
+
+    for (const key in indicatorsConf) {
+        if (Object.prototype.hasOwnProperty.call(indicatorsConf, key)) {
+            const indicator = indicatorsConf[key];
+            indicatorImplementerTypeMap[key] = indicator.aggregateExportAttributeOptionCombo;
+            const implementerType = allowed_implementer_types.find(impl => impl.id === indicator.aggregateExportAttributeOptionCombo).name;
+            indicatorImplementerTypeMap[key] = { "name": indicator.name, "implementerType": implementerType };
+        }
+    }
+
+    //Count the implementer types
+    const implementerTypeCounts = {};
+    for (const key in indicatorImplementerTypeMap) {
+        if (Object.prototype.hasOwnProperty.call(indicatorImplementerTypeMap, key)) {
+            const indicator = indicatorImplementerTypeMap[key];
+            if (Object.prototype.hasOwnProperty.call(implementerTypeCounts, indicator.implementerType)) {
+                implementerTypeCounts[indicator.implementerType] += 1;
+            } else {
+                implementerTypeCounts[indicator.implementerType] = 1;
+            }
+        }
+    }
+    if (Object.keys(implementerTypeCounts).length > 1) {
+        for (const key in implementerTypeCounts) {
+            if (Object.prototype.hasOwnProperty.call(implementerTypeCounts, key)) {
+                validationResults["SINGLE_IMPLEMENTER_TYPE"].issues.push([key, implementerTypeCounts[key]]);
+            }
+        }
+    }
+
+}
+
 export async function reportToPDF() {
 
     const { jsPDF } = window.jspdf;
@@ -969,6 +925,8 @@ export async function reportToPDF() {
     doc.text("Package version: " + metadataPackageVersion, 20, 60);
     doc.text("App version: " + localAppVersion, 20, 70);
     doc.text("Generated on: " + current_time, 20, 80);
+    doc.text("Country: " + root_orgunit.name, 20, 90);
+    doc.text("Implementer types: " + getUniqueImplementerTypes(updatedIndicators).join(", "), 20, 100);
     doc.addPage();
     doc.page = 1;
     for (var validationType in validationResults) {
@@ -1011,7 +969,7 @@ function indicatorNumeratorExpressionDescription(id) {
 
 export function configToCSV() {
     var csv_data = [];
-    csv_data.push("\"ex_uid\",\"exchange_name\",\"request_name\",\"Code\",\"Short Name\",\"Indicator name\",\"Period type\",\"Numerator\"");
+    csv_data.push("\"ex_uid\",\"exchange_name\",\"request_name\",\"Code\",\"Short Name\",\"Indicator name\",\"Period type\",\"Numerator\", \"Implementer type\"");
 
     for (var ex of exchanges) {
         for (var req of ex.source.requests) {
@@ -1164,6 +1122,7 @@ export async function runValidation() {
             checkTargetOutputIdScheme(exchanges, validationResults);
             identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPackage);
             identifyMutuallyExclusiveAgeBands(indicatorsConf, exchanges);
+            checkSingleImplementerType(indicatorsConf);
         } else {
             validationResults["EX_EXIST"].issues.push(["No exchanges found"]);
         }

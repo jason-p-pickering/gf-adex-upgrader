@@ -73,5 +73,15 @@
     "run-validation-btn": "Executar Validação",
     "download-summary-btn": "Baixar Resumo (CSV)",
     "download-report-btn": "Baixar Relatório (PDF)"
+  },
+  "update-impl-type" : {
+    "title": "Atualizar Tipo de Implementação",
+    "content": "Selecione o tipo de implementação que você deseja atualizar. Todos os indicadores GFADEX serão atualizados para este tipo de implementação. Clique no botão \"Atualizar Tipo de Implementação\" abaixo para prosseguir.",
+    "update-impl-type-btn": "Atualizar Tipo de Implementação",
+    "update": "Atualizar",
+    "impl-type": "Tipo de Implementação",
+    "impl-type-required": "Tipo de Implementação é obrigatório",
+    "impl-type-updated": "Tipo de Implementação atualizado com sucesso",
+    "impl-type-update-error": "Erro ao atualizar o Tipo de Implementação. Por favor, tente novamente."
   }
 }

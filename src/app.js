@@ -39,6 +39,8 @@ import { showImportMetadataPackage } from "./views/showImportMetadataPackage.js"
 import { importMetadataPackage } from "./components/ImportMetadataPackage.js";
 import { showValidationReport } from "./views/showValidationReport.js";
 import { runValidation, reportToPDF, configToCSV } from "./components/ValidationReport.js";
+import { updateImplType,patchIndicatorAggregateDataExportCombo  } from "./components/UpdateImplementerType.js";
+import { showUpdateImplType } from "./views/showUpdateImplemeterType.js";
 
 
 
@@ -83,6 +85,9 @@ window.runValidation = runValidation;
 window.reportToPDF = reportToPDF;
 window.configToCSV = configToCSV;
 window.exportLocalExchange = exportLocalExchange;
+window.showUpdateImplType = showUpdateImplType;
+window.updateImplType = updateImplType;
+window.patchIndicatorAggregateDataExportCombo = patchIndicatorAggregateDataExportCombo;
 
 document.addEventListener("DOMContentLoaded", function () {
 
