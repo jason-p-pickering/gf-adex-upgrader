@@ -1,6 +1,8 @@
 
 
-import { d2Fetch, fetchIndicators, fetchIndicatorsFromDataStore, fetchPackageReleaseInfo, fetchRemoteAppVersion, fetchLocalAppVersion, allowed_implementer_types } from "../js/utils.js";
+import { d2Fetch, fetchIndicators, fetchIndicatorsFromDataStore, fetchPackageReleaseInfo, fetchRemoteAppVersion, fetchLocalAppVersion, allowed_implementer_types, disaggMap } from "../js/utils.js";
+import { validationResults } from "../modules/ValidationChecks.js";
+
 
 var indicators = false;
 var operands = false;
@@ -45,194 +47,6 @@ var indicatorpTypes = {
     "QUARTERLY": [],
     "YEARLY": []
 };
-
-
-class ValidationResult {
-    constructor(title, instruction, headers) {
-        this.title = title;
-        this.instruction = instruction;
-        this.headers = headers;
-        this.issues = [];
-    }
-}
-
-class RequestsDuplicatedIndicators extends ValidationResult {
-    constructor() {
-        super("Requests with duplicate indicators",
-            "GF ADEx requests with the same indicator repeated in the `dx` section. Resolve the duplicates listed below.",
-            [{ "title": "Request" }, { "title": "Duplicates" }]);
-    }
-}
-
-class RequestsInidicatorsNotConfigured extends ValidationResult {
-    constructor() {
-        super("Requests with indicators that are not configured",
-            "GF ADEx requests that include indicators that are not configured, meaning their numerator is 0. These indicators should either configured, or removed from the request.",
-            [{ "title": "Request" }, { "title": "Indicator name" }, { "title": "Indicator id" }, { "numerator": "Numerator" }]);
-    }
-}
-
-var validationResults = {
-    "REQ_IND_DUPLICATED": new RequestsDuplicatedIndicators(),
-    "REQ_IND_UNCONF": new RequestsInidicatorsNotConfigured(),
-    "REQ_IND_NONGF": {
-        "title": "Requests with non-GFADEx indicators",
-        "instruction": "GFADEx requests with indicators that are not GFADEx indicators. Only GFADEx indicators should be included in GFADEx requests. Remove the unknown indicators from the GFADEx requests.",
-        "headers": [{ "title": "Request" }, { "title": "Indicator ID" }],
-        "issues": []
-    },
-    "REQ_PE_MIXED": {
-        "title": "Requests with mixed period types",
-        "instruction": "GF ADEx requests should not contain periods of different period types. Revise the requests to include only one period type.",
-        "headers": [{ "title": "Request" }, { "title": "Request period" }],
-        "issues": []
-    },
-    "REQ_PE_UNKNOWN": {
-        "title": "Requests with unsupported period types",
-        "instruction": "GF ADEx requests should only consist of monthly, quarterly, or yearly periods. Revise the requests to include only one of these types.",
-        "headers": [{ "title": "Request" }, { "title": "Request period" }],
-        "issues": []
-    },
-    "REQ_IND_PERIOD_CONFLICT": {
-        "title": "Indicators in multiple requests with different period types",
-        "instruction": "GF ADEx indicators can be may be used in multiple requests, but they should never be used in requests with periods which overlap. Carefully review the requests listed below to ensure that the periods do not overlap with one another.",
-        "headers": [{ "title": "Indicator name" }, { "title": "Indicator id" }, { "title": "Request" }],
-        "issues": []
-    },
-    "REQ_PE_RELATIVE": {
-        "title": "Requests with non-relative period types",
-        "instruction": "GF ADEx requests should usually only contain relative periods. Review the affected requests and consider changing the periods to relative periods.",
-        "headers": [{ "title": "Request" }, { "title": "Request period" }],
-        "issues": []
-    },
-    "IND_CONF_IGNORED": {
-        "title": "Indicators that are configured but not in requests",
-        "instruction": "Usually, GF ADEx indicators that have been configured (numerator != 0), should be part of a request. Carefully review all of the listed indicators to ensure that they are not needed in any of the requests. Consider to delete these indicators if they are not needed.",
-        "headers": [{ "title": "Indicator name" }, { "title": "Indicator id" }],
-        "issues": []
-    },
-    "IND_DENOM_CHANGED": {
-        "title": "GF ADEx indicators with modified denominator",
-        "instruction": "All GF ADEx indicators should have a denominator of '1'. Revise the indicators listed below to ensure that the denominator is set to '1'.",
-        "headers": [{ "title": "Indicator name" }, { "title": "Indicator id" }, { "title": "Denominator" }],
-        "issues": []
-    },
-    "IND_DECIMALS_CHANGED": {
-        "title": "GF ADEx indicators with modified decimals",
-        "instruction": " All GF ADEx indicators should have the number of decimals set to '0'. For each indicator listed, change the \"Decimals in data output\" property of the indicator to '0' using the Maintenance app.",
-        "headers": [{ "title": "Indicator name" }, { "title": "Indicator id" }, { "title": "Decimals" }],
-        "issues": []
-    },
-    "IND_IMPLEMENTER_TYPE": {
-        "title": "GF ADex Indicators with incorrect implementer type",
-        "instruction": "GF ADEx indicators should be associated with a valid implementer type. For each indicator listed, change the \"Attribute option combination for data export\" to a valid implementer type UID. Consult the documentation for a list of possible values.",
-        "headers": [{ "title": "Indicator name" }, { "title": "Indicator id" }, { "title": "Implementer type" }],
-        "issues": []
-    },
-    "EX_PUBLIC_SHARING": {
-        "title": "GF ADEX exchanges should not be publicly shared",
-        "instruction": "GF ADEx exchanges should only be shared with specific users or user groups. Remove the public sharing from the exchanges listed below and share them with specific users instead.",
-        "headers": [{ "title": "Exchange name" }],
-        "issues": []
-    },
-    "EX_USERGROUP_SHARING": {
-        "title": "GF ADEx exchanges should be shared with user groups",
-        "instruction": "GF ADEx exchanges should be shared with user groups who either need access to view them or who have access to actually submit a data exchange. Add user groups with appropriate permissions to the exchanges listed below.",
-        "headers": [{ "title": "Exchange name" }],
-        "issues": []
-    },
-    "REQ_OUTPUT_ID_SCHEME": {
-        "title": "GF ADEx requests should use the correct attribute output scheme",
-        "instruction": "GF ADEx requests should use the correct attribute output scheme specifically (\"outputIdScheme\": \"attribute:nHzX73VyNun\"). Revise the requests listed below to ensure that the output ID scheme is set correctly.",
-        "headers": [{ "title": "Request" }, { "title": "Output ID scheme" }],
-        "issues": []
-    },
-    "EX_TARGET_API": {
-        "title": "GF ADEx exchanges should use the correct target server.",
-        "instruction": "GF ADEx exchanges should use the correct target server: https://adex.theglobalfund.org. Note, during testing you should use the UAT server at https://uat.adex.theglobalfund.org. However, once you move your exchange to production, be sure that the target API is set to the correct server.",
-        "headers": [{ "title": "Exchange name" }, { "title": "Target API" }],
-        "issues": []
-    },
-    "EX_BASIC_AUTH": {
-        "title": "GF ADEx exchanges should not use basic authentication.",
-        "instruction": "GF ADEx exchanges should used a personal access token instead of basic authentication. Remove any basic authentication credentials from the exchanges listed below and replace them with a DHIS2 personal access token.",
-        "headers": [{ "title": "Exchange name" }, { "title": "Username" }],
-        "issues": []
-    },
-    "REQ_ROOT_ORGUNIT": {
-        "title": "GF ADEx requests should be aggregated to the level 1 organisation unit.",
-        "instruction": "Currently, GF ADEx requests should be aggregated to the level 1 organisation unit. Revise the requests listed below to ensure that the organisation unit is set to the level 1 organisation unit (National level).",
-        "headers": [{ "title": "Request" }, { "title": "Organisation unit" }],
-        "issues": []
-    },
-    "ORGUNIT_CODE": {
-        "title": "The root organisation unit should have a valid ISO3 code as the code or as an attribute",
-        "instruction": "Check to be sure that you have defined either the code or attribute for your country with the correct ISO3 code. Consult the GF ADEx documentation for a list of valid ISO3 codes.",
-        "headers": [{ "title": "Organisation unit" }, { "title": "Code" }, { "title": "Attribute" }],
-        issues: []
-    },
-    "EX_TARGET_OU_SCHEME": {
-        "title": "GF ADEx exchanges should use the correct target organisation unit scheme.",
-        "instruction": "GF ADEX exchanges should use \"CODE\" as the target organisation unit scheme. Revise the exchanges listed below and change the target organisation unit scheme to \"CODE\".",
-        "headers": [{ "title": "Exchange name" }, { "title": "Target OU scheme" }],
-        issues: []
-    },
-    "EX_TARGET_ID_SCHEME": {
-        "title": "GF ADEx exchanges should use the correct target ID scheme.",
-        "instruction": "GF ADEX exchanges should use \"UID\" as the target ID scheme. Revise the exchanges listed below and change the target ID scheme to \"UID\".",
-        "headers": [{ "title": "Exchange name" }, { "title": "Target ID scheme" }],
-        issues: []
-    },
-    "EX_EXIST": {
-        "title": "At least one GF ADEx data exchange should exist",
-        "instruction": "At least one aggregate data exchange with a target API URL containing \"globalfund\" should exist.",
-        "headers": [{ "title": "Exchange name" }],
-        issues: []
-    },
-    "INDS_EXIST": {
-        "title": "At least one GF indicator should exist.",
-        "instruction": "If you have not already imported the GF ADEX metadata package, you should do so now.",
-        "headers": [{ "title": "Indicator name" }],
-        issues: []
-    },
-    "REFERENCE_METADATA": {
-        "title": "The GFADEX reference metadata package should be imported to the datastore.",
-        "instruction": "If you have not already imported a GFADEX metadata package, you should do so now using the GF ADEx Flow app.",
-        "headers": [{ "title": "Message" }],
-        issues: []
-    },
-    "IND_UNKNOWN_IN_REQUESTS": {
-        "title": "GFADEX requests should not include indicators that are not in the GFADEX metadata package.",
-        "instruction": "Unknown GF ADEX indicator should not be used in any requests made to the GF ADEx server. Remove the unknown indicators from the GF ADEx requests.",
-        "headers": [{ "title": "ID" }, { "title": "Indicator name" }],
-        issues: []
-    },
-    "IND_MUTUALLY_EXCLUSIVE_AGE_BANDS": {
-        "title": "Indicators which have defined mutually exclusive age bands.",
-        "instruction": "Certain GF ADex indicators have a category combination with non-mutually exclusive age bands. You should not submit age bands which overlap with one another. For instance, if you submit <5, 5-14, you should not also submit <15 for the same GF ADEx indicator.  You should use either the fine age bands or the coarse age bands, but not both. Please remove the coarse age band if you can map the fine age bands. Review the indicators listed below and ensure that the age bands are mutually exclusive for the same indicator.",
-        "headers": [{ "title": "Indicator name" }],
-        issues: []
-    },
-    "METADATA_PACKAGE_VERSION": {
-        "title": "The GFADEX metadata package should be the latest version.",
-        "instruction": "A new version of the GFADEX metadata package is available. You should import the latest version of the GFADEX metadata package to the datastore. Follow the instructions provided in the GF ADEx Flow app \"Update\" section.",
-        "headers": [{ "title": "Remote version" }, { "title": "Local version" }],
-        issues: []
-    },
-    "APP_VERSION": {
-        "title": "The GFADEX app should be the latest version.",
-        "instruction": "A new version of the GFADEX app is available. You should update the GFADEX app to the latest version. The ADEx Flow app is availble in the DHIS2 App Hub. Open the App Management app and search for \"ADEx Flow\" to install the latest version.",
-        "headers": [{ "title": "Remote version" }, { "title": "Local version" }],
-        issues: []
-    },
-    "SINGLE_IMPLEMENTER_TYPE": {
-        "title": "All GFADEX indicators which are configured should be attributed to a single implementer type.",
-        "instruction": "Review the indicators listed below and ensure that they are all attributed to a single implementer type.",
-        "headers": [  { "title": "Implementer type" }, {"title": "Count of indicators" }],
-        issues: []
-    }
-};
-
 
 async function fetchExchanges() {
     const data = await d2Fetch("aggregateDataExchanges.json?filter=target.api.url:like:globalfund&fields=*&paging=false");
@@ -700,14 +514,14 @@ function validateReferenceMetadata(metadataPackage) {
         const packageVersion = pacakgeMetadata?.version;
         const semverPattern = /^\d+\.\d+\.\d+$/;
         if (!semverPattern.test(packageVersion)) {
-            validationResults["REFERENCE_METADATA"].issues.push(["The GFADEX metadata package versions is not valid: " + packageVersion]);
+            validationResults["REFERENCE_METADATA"].issues.push(["The GFADEx metadata package versions is not valid: " + packageVersion]);
         }
 
         //Check that the package origin is globalfund.org
         const packageOriginPattern = /globalfund\.org$/;
         const packageOrigin = pacakgeMetadata?.origin;
         if (!packageOriginPattern.test(packageOrigin)) {
-            validationResults["REFERENCE_METADATA"].issues.push(["The GFADEX metadata package origin is not valid: " + packageOrigin]);
+            validationResults["REFERENCE_METADATA"].issues.push(["The GFADEx metadata package origin is not valid: " + packageOrigin]);
         }
     }
 
@@ -749,7 +563,7 @@ function identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPack
             }
         }
     }
-    //Filter local GFADEx indicators which have been used in requests but which are not part of the GFADEX metadata package
+    //Filter local GFADEx indicators which have been used in requests but which are not part of the GFADEx metadata package
     const unknownIndicatorsInReqests = indicators.filter(indicator => unknownIndicators.includes(indicator.id));
 
     if (unknownIndicatorsInReqests.length > 0) {
@@ -903,6 +717,21 @@ function checkSingleImplementerType(indicatorsConf) {
         for (const key in implementerTypeCounts) {
             if (Object.prototype.hasOwnProperty.call(implementerTypeCounts, key)) {
                 validationResults["SINGLE_IMPLEMENTER_TYPE"].issues.push([key, implementerTypeCounts[key]]);
+            }
+        }
+    }
+
+}
+
+function checkDisaggregatedIndicators(indicatorsConf, metadataPackage) {
+    for (const indicator in indicatorsConf) {
+        const disagg = disaggMap.find(obj => indicator in obj);
+        if (disagg) {
+            const totalIndicator = disagg[indicator];
+            const totalIndicatorExists = Object.prototype.hasOwnProperty.call(indicatorsConf, totalIndicator);
+            if (!totalIndicatorExists) {
+                const totalsName = metadataPackage.indicators.find(ind => ind.id === totalIndicator).name ?? "UNKNOWN";
+                validationResults["INDICATOR_DISAGGS"].issues.push([totalsName]);
             }
         }
     }
@@ -1123,6 +952,7 @@ export async function runValidation() {
             identifyUnknownIndicatorsInRequests(exchanges, indicators, metadataPackage);
             identifyMutuallyExclusiveAgeBands(indicatorsConf, exchanges);
             checkSingleImplementerType(indicatorsConf);
+            checkDisaggregatedIndicators(indicatorsConf, metadataPackage);
         } else {
             validationResults["EX_EXIST"].issues.push(["No exchanges found"]);
         }
@@ -1132,7 +962,7 @@ export async function runValidation() {
             findChangedDecimals(indicators, validationResults);
             findInvalidImplementerTypes(indicators, validationResults);
         } else {
-            validationResults["INDS_EXIST"].issues.push(["No GF ADEX indicators found"]);
+            validationResults["INDS_EXIST"].issues.push(["No GFADEx indicators found"]);
         }
 
         validateOrgUnitCode(root_orgunit, validationResults);
@@ -1144,7 +974,7 @@ export async function runValidation() {
         printValidationResults(validationResults);
     } else {
         $("#loading").hide();
-        alert("The GFADEX metadata package is not present. Please import the GFADEX package into the datastore first!");
+        alert("The GFADEx metadata package is not present. Please import the GFADEx package into the datastore first!");
     }
 
 }

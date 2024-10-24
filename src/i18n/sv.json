@@ -71,7 +71,7 @@
   },
   "update-impl-type" : {
     "title": "Uppdatera implementeringstyp",
-    "content": "Välj den implementeringstyp du vill uppdatera till. Alla GFADEX-indikatorer kommer att uppdateras till denna implementeringstyp. Klicka på knappen \"Uppdatera implementeringstyp\" nedan för att fortsätta.",
+    "content": "Välj den implementeringstyp du vill uppdatera till. Alla GFADEx-indikatorer kommer att uppdateras till denna implementeringstyp. Klicka på knappen \"Uppdatera implementeringstyp\" nedan för att fortsätta.",
     "update-impl-type-btn": "Uppdatera implementeringstyp",
     "update": "Uppdatera",
     "impl-type": "Implementeringstyp",

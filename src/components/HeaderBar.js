@@ -19,7 +19,7 @@ export class HeaderBar extends HTMLElement {
                     </div>
                 </div>
             </a>
-            <p class="headerBarTitle" data-i18n="header.title">GF ADEx Flow App</p>
+            <p class="headerBarTitle" data-i18n="header.title">GFADEx Flow App</p>
             <button class="headerBarExit" onclick="location.href='../../..';" data-i18n="header.exit">Exit</button>
         </div>`;
     }

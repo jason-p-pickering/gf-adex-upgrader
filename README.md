@@ -1,5 +1,5 @@
 # Global Fund ADEx Metadata Manager
-This app will help you to manage local indicator definitions for GF ADEx implementations.
+This app will help you to manage local indicator definitions for GFADEx implementations.
 
 ## License
 © Copyright 2024 University of Oslo
@@ -8,7 +8,7 @@ This app will help you to manage local indicator definitions for GF ADEx impleme
 
 The Global Fund may periodically release new and updated versions of the Aggregate Data Exchange (ADEx)
 metadata package. You can use this app to help to upgrade your existing indicators to a later version
-of the GF ADEx metadata, while at the same time maintaining your existing numerator definitions
+of the GFADEx metadata, while at the same time maintaining your existing numerator definitions
 for your local GFADEx indicators.
 
 ## Developing the app

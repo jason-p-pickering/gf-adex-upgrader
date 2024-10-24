@@ -75,7 +75,7 @@
     },
     "update-impl-type" : {
       "title": "Update Implementation Type",
-      "content": "Select the implementation type you would like to update to. All GFADEX indicators will be updated to this implemeter type. Click the \"Update Implementation Type\" button below to proceed.",
+      "content": "Select the implementation type you would like to update to. All GFADEx indicators will be updated to this implemeter type. Click the \"Update Implementation Type\" button below to proceed.",
       "update-impl-type-btn": "Update Implementation Type",
       "update": "Update",
       "impl-type": "Implementation Type",

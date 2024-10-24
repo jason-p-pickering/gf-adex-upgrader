@@ -41,7 +41,7 @@ export function importMetadataPackage() {
                         renderUpgradeStatusReport(data, indicatorsToDeleteList);
                     })
                     .catch((error) => {
-                        console.error("Error while importing GF ADEX indicators.", error);
+                        console.error("Error while importing GFADEx indicators.", error);
                         alert(__("upgrade-error"));
                     });
             });

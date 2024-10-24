@@ -71,7 +71,7 @@
   },
   "update-impl-type" : {
     "title": "Mettre à jour le type de mise en œuvre",
-    "content": "Sélectionnez le type de mise en œuvre que vous souhaitez mettre à jour. Tous les indicateurs GFADEX seront mis à jour vers ce type de mise en œuvre. Cliquez sur le bouton \"Mettre à jour le type de mise en œuvre\" ci-dessous pour continuer.",
+    "content": "Sélectionnez le type de mise en œuvre que vous souhaitez mettre à jour. Tous les indicateurs GFADEx seront mis à jour vers ce type de mise en œuvre. Cliquez sur le bouton \"Mettre à jour le type de mise en œuvre\" ci-dessous pour continuer.",
     "update-impl-type-btn": "Mettre à jour le type de mise en œuvre",
     "update": "Mettre à jour",
     "impl-type": "Type de mise en œuvre",
