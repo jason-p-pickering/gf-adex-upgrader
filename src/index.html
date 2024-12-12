@@ -2,15 +2,14 @@
 <!--suppress ALL -->
 <html>
 <head>
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-  </head>
+    <meta charset="utf-8">
 </head>
 <body>
-    <header-bar></header-bar>
+    <div id="dhis-header-bar"></div>
+    <script defer src="resources/dhis-header-bar.js"></script>
     <navigation-strip></navigation-strip>
     <div class="mainView" >
-        <div id="appContent" style="position: fixed;top: 80px;overflow: visible; overflow-y: auto; height: 95%;">
-        <!--Start with the intro page.-->
+        <div id="appContent">
             <intro-page></intro-page>
         </div>
     </div>

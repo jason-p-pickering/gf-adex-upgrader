@@ -1,0 +1,12 @@
+
+{
+  "presets": [["env", {"modules": false}]],
+
+  "plugins": ["@babel/syntax-dynamic-import"],
+
+  "env": {
+    "test": {
+      "plugins": ["@babel/dynamic-import-node"]
+    }
+  }
+}

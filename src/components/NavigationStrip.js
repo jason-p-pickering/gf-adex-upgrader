@@ -1,7 +1,7 @@
 export class NavigationStrip extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
-        <div style="display: flex; position: fixed; background: rgb(228, 228, 228); width: 100%; z-index: 10; top: 50px; flex: 1 1 0%; height: 40px;">
+        <div id="navbar">
             <button class="tab active" onclick="showIntroduction()">Introduction</button>
             <button class="tab" onclick="showImportMetadataPackage()">Import</button>
             <button class="tab" onclick="showValidationReport()" >Validate</button>
