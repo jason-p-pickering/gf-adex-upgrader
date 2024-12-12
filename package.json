@@ -1,17 +1,22 @@
 {
   "name": "gf-adex-flow-app",
   "description": "ADEx Flow",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "dependencies": {
     "@andreasremdt/simple-translator": "^2.0.4",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "buffer": "^6.0.3",
     "datatables.net-dt": "^1.13.8",
     "ejs": "^3.1.9",
+    "eslint-plugin-react": "^7.37.2",
     "jquery": "^3.7.1",
     "jquery-datatables": "^1.10.18",
     "jquery.json-viewer": "^1.5.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.1",
-    "semver": "^7.6.0"
+    "path": "^0.12.7",
+    "semver": "^7.6.0",
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^11.0.0",
