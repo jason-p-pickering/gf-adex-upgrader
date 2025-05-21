@@ -271,7 +271,7 @@ async function fetchDataElementOperands() {
 
 //Get the data elements when used directly in formulas
 async function fetchDataElements() {
-    const data = await d2Fetch("dataElements.json?fields=id,shortName&paging=false");
+    const data = await d2Fetch("dataElements.json?fields=id,name&paging=false");
     if (!data || data.dataElements.length === 0) {
         console.log("No data elements could be found.");
         return false;
@@ -1011,12 +1011,12 @@ function replaceFormulasWithShortNames(indicators, operands, dataElements, dataS
     const totalsMap = {};
 
     dataElements.dataElements.forEach(dataElement => {
-        totalsMap[dataElement.id] = dataElement.shortName;
+        totalsMap[dataElement.id] = dataElement.name;
     });
 
     const detailsMap = {};
     operands.dataElementOperands.forEach(operand => {
-        detailsMap[operand.dimensionItem] = operand.shortName;
+        detailsMap[operand.dimensionItem] = operand.name;
     });
 
     const dataSetMap = {};
